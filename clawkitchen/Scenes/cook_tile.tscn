@@ -1,0 +1,18 @@
+[gd_scene load_steps=4 format=3 uid="uid://7kwfasrrxs6l"]
+
+[ext_resource type="Script" path="res://Scenes/cook_tile.gd" id="1_dce4j"]
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_6gkql"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_cvjdt"]
+size = Vector2(30, 30)
+
+[node name="CookTile" type="Area2D"]
+script = ExtResource("1_dce4j")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(30, 30)
+texture = SubResource("CanvasTexture_6gkql")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_cvjdt")
