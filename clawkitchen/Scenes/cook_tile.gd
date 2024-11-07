@@ -1,6 +1,10 @@
 extends Area2D
 
-# This function will be called when a body enters the Area2D.
-func _on_body_entered(body: Node) -> void:
-	if body.is_in_group("players"):  # Check if the body is a player
-		print("Player has entered the cook tile area.")
+# Reference to the spawner
+@export var spawner: Node
+
+# Called when a mouse button is pressed on this tile
+func _input_event(viewport, event, shape_idx) -> void:
+	if event is InputEventMouseButton and event.pressed:
+		if spawner:
+			spawner.spawn_new_cook_tile(self)

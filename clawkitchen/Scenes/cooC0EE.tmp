@@ -6,3 +6,4 @@
 [node name="CookTileSpawner" type="Node2D"]
 script = ExtResource("1_sxv0g")
 cook_tile_scene = ExtResource("2_cj3o6")
+tile_size = null
