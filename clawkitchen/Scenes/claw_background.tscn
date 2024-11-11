@@ -1,0 +1,47 @@
+[gd_scene load_steps=2 format=3 uid="uid://cwoh3durcjkvg"]
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_7pq6k"]
+
+[node name="ClawBackground" type="Node2D"]
+
+[node name="TextureRect" type="TextureRect" parent="."]
+modulate = Color(0.615686, 0.811765, 0.403922, 1)
+offset_right = 436.0
+offset_bottom = 644.0
+texture = SubResource("CanvasTexture_7pq6k")
+
+[node name="wallL" type="ColorRect" parent="."]
+modulate = Color(1, 0.415686, 1, 1)
+z_index = 1
+offset_right = 17.0
+offset_bottom = 646.0
+
+[node name="wallR" type="ColorRect" parent="."]
+modulate = Color(1, 0.415686, 1, 1)
+offset_left = 431.0
+offset_top = -2.0
+offset_right = 450.0
+offset_bottom = 657.0
+
+[node name="wallFloor" type="ColorRect" parent="."]
+modulate = Color(1, 0.415686, 1, 1)
+z_index = 1
+offset_left = 9.0
+offset_top = 622.0
+offset_right = 435.0
+offset_bottom = 674.0
+
+[node name="wallTop" type="ColorRect" parent="."]
+modulate = Color(1, 0.415686, 1, 1)
+offset_left = 10.0
+offset_top = -19.0
+offset_right = 440.0
+offset_bottom = 24.0
+
+[node name="wallTop2" type="ColorRect" parent="."]
+modulate = Color(0.627451, 0.415686, 1, 1)
+z_index = 1
+offset_left = 17.0
+offset_top = 24.0
+offset_right = 431.0
+offset_bottom = 120.0

@@ -1,0 +1,23 @@
+[gd_scene load_steps=4 format=3 uid="uid://cm2y2gnjs3smp"]
+
+[ext_resource type="Script" path="res://food.gd" id="1_3r4rc"]
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_4xnc2"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wdp8a"]
+size = Vector2(50, 50)
+
+[node name="Food" type="CharacterBody2D" groups=["food"]]
+collision_layer = 2
+collision_mask = 3
+script = ExtResource("1_3r4rc")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(50, 50)
+texture = SubResource("CanvasTexture_4xnc2")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 1)
+shape = SubResource("RectangleShape2D_wdp8a")
+
+[connection signal="food_dropped" from="." to="." method="_on_food_dropped"]

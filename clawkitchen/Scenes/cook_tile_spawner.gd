@@ -14,8 +14,8 @@ var current_cook_tiles_count: int = 0
 
 # Called when the node is ready
 func _ready() -> void:
-	# Optionally spawn a cook tile when the game starts (in the center of the screen)
-	spawn_cook_tile(get_viewport_rect().size / 2)
+	# Spawn the first cook tile further to the right of the screen
+	spawn_cook_tile(Vector2(get_viewport().size.x * 0.72, get_viewport().size.y / 2))  # Spawn 75% of the screen width
 
 # Function to spawn a new cook tile at a given position
 func spawn_cook_tile(position: Vector2) -> void:
@@ -89,7 +89,7 @@ func spawn_new_cook_tile_at_random_edges() -> void:
 				if spawn_position.x > spawn_margin and spawn_position.x < get_viewport().size.x - spawn_margin:
 					available_spawn_locations.append(spawn_position)
 					print("Available edge at ", spawn_position)  # Debug: show available spawn positions
-				
+					
 				# Mark this side as occupied for the tile
 				tile.mark_side_as_occupied(direction)
 	

@@ -1,12 +1,39 @@
-[gd_scene load_steps=4 format=3 uid="uid://0ysng1aa0llg"]
+[gd_scene load_steps=8 format=3 uid="uid://0ysng1aa0llg"]
 
 [ext_resource type="Script" path="res://Scenes/main.gd" id="1_oplfw"]
-[ext_resource type="PackedScene" uid="uid://7j1v11uuol36" path="res://Scenes/player.tscn" id="1_u6g8c"]
 [ext_resource type="PackedScene" uid="uid://00fmrmgpokwa" path="res://Scenes/cook_tile_spawner.tscn" id="2_g3vtl"]
+[ext_resource type="PackedScene" uid="uid://cwoh3durcjkvg" path="res://Scenes/claw_background.tscn" id="2_yh4ff"]
+[ext_resource type="PackedScene" uid="uid://y0ys5si0631" path="res://Scenes/food_spawner.tscn" id="4_l578h"]
+[ext_resource type="PackedScene" uid="uid://d0t633hy5ht60" path="res://Scenes/claw.tscn" id="5_gkbhi"]
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_q6qmv"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1jq21"]
+size = Vector2(97, 11)
 
 [node name="Main" type="Node2D"]
 script = ExtResource("1_oplfw")
 
-[node name="Player" parent="." instance=ExtResource("1_u6g8c")]
+[node name="ClawBackground" parent="." instance=ExtResource("2_yh4ff")]
 
 [node name="CookTileSpawner" parent="." instance=ExtResource("2_g3vtl")]
+
+[node name="FoodSpawner" parent="." instance=ExtResource("4_l578h")]
+
+[node name="Claw" parent="." instance=ExtResource("5_gkbhi")]
+
+[node name="CollectionBin" type="Area2D" parent="."]
+position = Vector2(67, 572)
+collision_layer = 4
+collision_mask = 2
+
+[node name="Sprite2D" type="Sprite2D" parent="CollectionBin"]
+position = Vector2(-1.5, 0)
+scale = Vector2(97, 100)
+texture = SubResource("CanvasTexture_q6qmv")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CollectionBin"]
+position = Vector2(-1.5, -44.5)
+shape = SubResource("RectangleShape2D_1jq21")
+
+[connection signal="body_entered" from="CollectionBin" to="." method="_on_collection_bin_body_entered"]
