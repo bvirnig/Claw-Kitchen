@@ -1,10 +1,10 @@
 [gd_scene load_steps=8 format=3 uid="uid://0ysng1aa0llg"]
 
 [ext_resource type="Script" path="res://Scenes/main.gd" id="1_oplfw"]
-[ext_resource type="PackedScene" uid="uid://00fmrmgpokwa" path="res://Scenes/cook_tile_spawner.tscn" id="2_g3vtl"]
 [ext_resource type="PackedScene" uid="uid://cwoh3durcjkvg" path="res://Scenes/claw_background.tscn" id="2_yh4ff"]
 [ext_resource type="PackedScene" uid="uid://y0ys5si0631" path="res://Scenes/food_spawner.tscn" id="4_l578h"]
 [ext_resource type="PackedScene" uid="uid://d0t633hy5ht60" path="res://Scenes/claw.tscn" id="5_gkbhi"]
+[ext_resource type="PackedScene" uid="uid://cjuvv2il4of7g" path="res://Scenes/stove_spawner.tscn" id="5_s3b3h"]
 
 [sub_resource type="CanvasTexture" id="CanvasTexture_q6qmv"]
 
@@ -16,11 +16,11 @@ script = ExtResource("1_oplfw")
 
 [node name="ClawBackground" parent="." instance=ExtResource("2_yh4ff")]
 
-[node name="CookTileSpawner" parent="." instance=ExtResource("2_g3vtl")]
-
 [node name="FoodSpawner" parent="." instance=ExtResource("4_l578h")]
 
 [node name="Claw" parent="." instance=ExtResource("5_gkbhi")]
+
+[node name="StoveSpawner" parent="." instance=ExtResource("5_s3b3h")]
 
 [node name="CollectionBin" type="Area2D" parent="."]
 position = Vector2(67, 572)

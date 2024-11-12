@@ -56,9 +56,6 @@ func move_left_right(delta: float) -> void:
 	position.x += direction * speed * delta
 	is_moving_left_right = true  # Set to true while moving left/right
 
-	# Debugging: Log the position and the boundaries
-	print("Position: ", position.x, ", Left Bound: ", 30, ", Right Bound: ", SCREEN_WIDTH - claw_width / 2)
-
 	# Boundary checks
 	if position.x <= 20 + claw_width / 2:  # Adjust left boundary to be 30 pixels from the left edge
 		position.x = 30 + claw_width / 2  # Prevent moving too far left
@@ -107,7 +104,6 @@ func drop_food() -> void:
 		# Check if the claw is over the collection area
 		if is_over_collection_area():
 			print("Food collected!")  # Log the food collection for debugging purposes
-		print("Dropping food at position: ", position)  # Debugging: Log food drop
 		position.y = original_y_position  # Drop at original position
 		food = null  # Release the food
 		is_holding = false  # No longer holding food

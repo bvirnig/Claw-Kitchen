@@ -17,12 +17,13 @@ func _ready() -> void:
 func _spawn_prizes() -> void:
 	var prize_height = 50  # Assuming each prize has a height of 50 pixels
 
-	# Get textures based on the current level
-#	var available_textures = get_textures_for_level(get_current_level())
+	# Make sure prize_textures is not empty
+	if prize_textures.size() == 0:
+		print("Error: prize_textures array is empty!")
 
 	for row in range(rows):
 		# Calculate the Y position for this row
-		var row_y_position = SCREEN_HEIGHT - (row * (prize_height + spacing)) - (prize_height)
+		var row_y_position = SCREEN_HEIGHT - (row * (prize_height + spacing)) - prize_height
 
 		for prize_index in range(prizes_per_row):
 			# Instantiate the prize from the scene
@@ -31,13 +32,16 @@ func _spawn_prizes() -> void:
 			# Calculate the X position for each prize in the row
 			var prize_x_position = (prize_index + 2.7) * (SCREEN_WIDTH / prizes_per_row * 0.7)
 
+			# Randomly select a texture from the prize_textures array
+			if prize_textures.size() > 0:
+				var random_texture = prize_textures[randi() % prize_textures.size()]
+				# Assuming the prize_scene has a "Sprite2D" node, set the texture
+				prize_instance.get_node("Sprite2D").texture = random_texture
+			else:
+				print("Error: No textures available in prize_textures.")
+
 			# Set the prize's position
 			prize_instance.position = Vector2(prize_x_position, row_y_position)
-
-			# Assign a random texture from the available textures
-#			if available_textures.size() > 0:
-#				var random_texture = available_textures[randi() % available_textures.size()]
-#				prize_instance.get_node("Sprite2D").texture = random_texture  # Assuming the Sprite node is named "Sprite2D"
 
 			# Add the prize to the scene
 			add_child(prize_instance)
@@ -67,7 +71,3 @@ func get_textures_for_level(level: int) -> Array:
 		5: return [prize_textures[5], prize_textures[6], prize_textures[8]]  # Textures 5, 6, 8 for level 5
 		6: return [prize_textures[15], prize_textures[16], prize_textures[17]]  # Textures 15, 16, 17 for level 6
 		_ : return []  # Return empty array for invalid levels
-
-# Placeholder function to get the current level; replace with your actual logic
-#func get_current_level() -> int:
-#	return get_parent().current_level  # Assuming current_level is accessible from the parent node

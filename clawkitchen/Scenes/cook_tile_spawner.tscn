@@ -1,8 +1,0 @@
-[gd_scene load_steps=3 format=3 uid="uid://00fmrmgpokwa"]
-
-[ext_resource type="Script" path="res://Scenes/cook_tile_spawner.gd" id="1_sxv0g"]
-[ext_resource type="PackedScene" uid="uid://7kwfasrrxs6l" path="res://Scenes/cook_tile.tscn" id="2_cj3o6"]
-
-[node name="CookTileSpawner" type="Node2D"]
-script = ExtResource("1_sxv0g")
-cook_tile_scene = ExtResource("2_cj3o6")
