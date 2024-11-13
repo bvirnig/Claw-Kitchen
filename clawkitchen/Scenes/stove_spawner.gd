@@ -45,7 +45,7 @@ func _process(delta: float) -> void:
 		_spawn_new_stove()
 
 	# If food is collected (check GameData), spawn a new stove
-	if Gamedata.food_collected > total_stoves_spawned:
+	if Gamedata.food_collected + 1 > total_stoves_spawned:
 		print("Food collected! Spawning a new stove...")
 		_spawn_new_stove()
 
