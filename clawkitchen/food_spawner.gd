@@ -4,7 +4,6 @@ extends Node2D
 @export var rows: int = 3  # Number of rows to spawn
 @export var prizes_per_row: int = 6  # Number of prizes per row
 @export var spacing: float = 2.0  # Spacing between prizes
-@export var prize_textures: Array = []  # Array of textures to choose from
 
 const SCREEN_WIDTH: int = 450  # Fixed screen width
 const SCREEN_HEIGHT: int = 648  # Fixed screen height
@@ -17,28 +16,63 @@ func _ready() -> void:
 func _spawn_prizes() -> void:
 	var prize_height = 50  # Assuming each prize has a height of 50 pixels
 
-	# Make sure prize_textures is not empty
-	if prize_textures.size() == 0:
-		print("Error: prize_textures array is empty!")
+	# Make sure GameData is loaded
+	if Gamedata == null:
+		print("Error: GameData singleton not found!")
+		return
 
+	# Check if food textures are available in GameData
+	if Gamedata.food_textures.size() == 0:
+		print("Error: food_textures array is empty in GameData!")
+		return
+
+	# Loop to spawn prizes in rows
 	for row in range(rows):
 		# Calculate the Y position for this row
 		var row_y_position = SCREEN_HEIGHT - (row * (prize_height + spacing)) - prize_height
 
+		# Loop to spawn prizes in the row
 		for prize_index in range(prizes_per_row):
 			# Instantiate the prize from the scene
 			var prize_instance = prize_scene.instantiate()
 
 			# Calculate the X position for each prize in the row
 			var prize_x_position = (prize_index + 2.7) * (SCREEN_WIDTH / prizes_per_row * 0.7)
+			print("Spawning prize at X:", prize_x_position, " Y:", row_y_position)
 
-			# Randomly select a texture from the prize_textures array
-			if prize_textures.size() > 0:
-				var random_texture = prize_textures[randi() % prize_textures.size()]
-				# Assuming the prize_scene has a "Sprite2D" node, set the texture
-				prize_instance.get_node("Sprite2D").texture = random_texture
-			else:
-				print("Error: No textures available in prize_textures.")
+			# Randomly select a texture from GameData's food textures
+			var random_texture = Gamedata.food_textures[randi() % Gamedata.food_textures.size()]
+			print("Selected texture:", random_texture)
+
+			# Ensure prize_instance has the Sprite2D node
+			var sprite_node = prize_instance.get_node("Sprite2D")
+			if sprite_node == null:
+				print("Error: No Sprite2D node found in prize scene!")
+				return
+
+			# Set the texture for the prize
+			sprite_node.texture = random_texture
+
+			# Set the food type based on the selected texture
+			var food_name = ""
+			var texture_index = Gamedata.food_textures.find(random_texture)
+
+			# Assign the food type based on the texture index
+			match texture_index:
+				0:
+					food_name = "bacon"
+				1:
+					food_name = "potatoes"
+				2:
+					food_name = "cheese"
+				3:
+					food_name = "stove"
+				_:
+					food_name = "unknown_food"  # Default case if the texture doesn't match any known food
+
+			# Assign the food type and texture index to the prize_instance
+			prize_instance.food_type = food_name
+			prize_instance.texture_index = texture_index
 
 			# Set the prize's position
 			prize_instance.position = Vector2(prize_x_position, row_y_position)
@@ -46,28 +80,3 @@ func _spawn_prizes() -> void:
 			# Add the prize to the scene
 			add_child(prize_instance)
 			prize_instance.add_to_group("prize")  # Add to the 'prize' group for easy management
-
-# Function to reset prizes, passing current_level to ensure speeds are updated correctly
-func reset_prizes(current_level: int) -> void:
-	clear_prizes()  # Clear existing prizes
-	_spawn_prizes()  # Spawn new prizes
-	# After spawning, update the speed of the prizes based on the current level
-	for prize in get_tree().get_nodes_in_group("prize"):
-		prize.update_speed(current_level)
-
-# Function to clear existing prizes
-func clear_prizes() -> void:
-	for child in get_children():
-		if child.is_in_group("prize"):
-			child.queue_free()  # Remove from the scene
-
-# Function to get textures available for the current level
-func get_textures_for_level(level: int) -> Array:
-	match level:
-		1: return [prize_textures[0]]  # Only texture 0 for level 1
-		2: return [prize_textures[1], prize_textures[2], prize_textures[3], prize_textures[4]]  # Textures 1-4 for level 2
-		3: return [prize_textures[7], prize_textures[12], prize_textures[13], prize_textures[14]]  # Textures 7, 12, 13, 14 for level 3
-		4: return [prize_textures[9], prize_textures[10], prize_textures[11]]  # Textures 9, 10, 11 for level 4
-		5: return [prize_textures[5], prize_textures[6], prize_textures[8]]  # Textures 5, 6, 8 for level 5
-		6: return [prize_textures[15], prize_textures[16], prize_textures[17]]  # Textures 15, 16, 17 for level 6
-		_ : return []  # Return empty array for invalid levels

@@ -1,13 +1,15 @@
-[gd_scene load_steps=4 format=3 uid="uid://dwkcoqkvjx7ks"]
+[gd_scene load_steps=5 format=3 uid="uid://dwkcoqkvjx7ks"]
 
 [ext_resource type="Script" path="res://stove.gd" id="1_43mb1"]
 [ext_resource type="Texture2D" uid="uid://d1je4lvxlpnlg" path="res://Food Assets/stovetop.png" id="2_g8rtr"]
+[ext_resource type="PackedScene" uid="uid://cm2y2gnjs3smp" path="res://Scenes/food.tscn" id="2_if7l8"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_jxe0d"]
 size = Vector2(99, 99)
 
-[node name="Stove" type="Area2D"]
+[node name="Stove" type="Area2D" groups=["stove"]]
 script = ExtResource("1_43mb1")
+prize_scene = ExtResource("2_if7l8")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture_filter = 1
@@ -17,3 +19,5 @@ texture = ExtResource("2_g8rtr")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0.5, 0.5)
 shape = SubResource("RectangleShape2D_jxe0d")
+
+[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]

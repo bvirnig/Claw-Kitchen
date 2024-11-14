@@ -17,7 +17,7 @@ config/icon="res://icon.svg"
 
 [autoload]
 
-Gamedata="*res://Scenes/gamedata.gd"
+Gamedata="*res://Scenes/game_data.tscn"
 
 [display]
 
@@ -26,6 +26,7 @@ window/stretch/mode="canvas_items"
 [global_group]
 
 food=""
+stove=""
 
 [input]
 

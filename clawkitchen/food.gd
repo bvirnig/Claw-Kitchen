@@ -1,6 +1,10 @@
 extends CharacterBody2D
 class_name Food
 
+@export var food_type: String = "unknown_food"  # Default food type, will be set by the spawner
+@export var texture_index: int = -1  # The index of the texture in the prize_textures array
+@export var prize_textures: Array = []  # Array of possible textures
+
 var is_lifted: bool = false
 var fall_chance: float = 0.1
 var fall_speed: float = 150.0
@@ -21,6 +25,13 @@ signal food_dropped
 # Initialization
 func _ready() -> void:
 	initial_position_y = position.y
+	# Set the texture based on the assigned texture index
+	if prize_textures.size() > 0 and texture_index >= 0 and texture_index < prize_textures.size():
+		var sprite = $Sprite2D
+		if sprite:
+			sprite.texture = prize_textures[texture_index]  # Directly assign the texture from the array
+	else:
+		print("Warning: Invalid texture index or prize_textures array is empty.")
 
 # Process each frame
 func _process(delta: float) -> void:
@@ -75,6 +86,6 @@ func _on_food_dropped() -> void:
 	
 # Function to collect the food (when it touches the collection bin)
 func collect():
-	print("Food collected!")  # Debug output
+	print("Food collected: " + food_type)  # Debug output showing the collected food type
 	emit_signal("food_dropped")  # Emit a signal to notify that the food has been collected
 	queue_free()  # Remove the food node from the scene
