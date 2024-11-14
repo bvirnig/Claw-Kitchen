@@ -17,8 +17,8 @@ func _ready() -> void:
 	# Initialize the request label with a random food request
 	update_request_label()
 
-	# Set the timer to repeat every 3 seconds and start it
-	request_timer.wait_time = 3.0  # Set the timer's interval to 3 seconds
+	# Set the timer to repeat every 10 seconds and start it
+	request_timer.wait_time = 10.0  # Set the timer's interval to 10 seconds
 	request_timer.start()  # Start the timer
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -51,15 +51,16 @@ func update_food_label() -> void:
 	var count = Gamedata.get_food_count(selected_item)  # Get the count for the selected food type
 	food_label.text = selected_item + ": " + str(count)  # Update the label with the current count
 
-# Update the request label with a random food item
+# Update the request label with a random food item from the first three items
 func update_request_label() -> void:
 	# Ensure Gamedata is loaded
 	if Gamedata == null:
 		print("Error: GameData singleton not found!")
 		return
 	
-	# Choose a random food type from the food_types array
-	var random_food = Gamedata.food_types[randi() % Gamedata.food_types.size()]
+	# Only select from the first three items in food_types
+	var requestable_food_types = Gamedata.food_types.slice(0, 3)
+	var random_food = requestable_food_types[randi() % requestable_food_types.size()]
 
 	# Set the request label's text to ask for the random food item
 	request_label.text = "Requesting: " + random_food
@@ -80,7 +81,6 @@ func restart_game() -> void:
 	print("Restarting the game...")  # Debug message
 	get_tree().reload_current_scene()  # Reloads the current scene, effectively restarting the game
 
-
+# Timer timeout callback to update the request label with a new random food request
 func _on_request_timer_timeout() -> void:
-# Update the request label with a new random food request
 	update_request_label()

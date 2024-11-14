@@ -20,4 +20,7 @@ texture = ExtResource("2_g8rtr")
 position = Vector2(0.5, 0.5)
 shape = SubResource("RectangleShape2D_jxe0d")
 
+[node name="CookTimer" type="Timer" parent="."]
+
 [connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
+[connection signal="timeout" from="CookTimer" to="." method="_on_cook_timer_timeout"]

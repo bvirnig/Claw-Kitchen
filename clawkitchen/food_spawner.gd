@@ -60,11 +60,11 @@ func _spawn_prizes() -> void:
 			# Assign the food type based on the texture index
 			match texture_index:
 				0:
-					food_name = "bacon"
+					food_name = "beef"
 				1:
-					food_name = "potatoes"
-				2:
 					food_name = "cheese"
+				2:
+					food_name = "potato"
 				3:
 					food_name = "stove"
 				_:
