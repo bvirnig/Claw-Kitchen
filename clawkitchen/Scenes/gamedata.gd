@@ -52,11 +52,12 @@ func get_food_count(food_type: String) -> int:
 func get_cooked_food_count(food_type: String) -> int:
 	return cooked_food_counts.get(food_type, 0)
 
-# Method to decrement the food count for a specific type
-func decrement_food(food_type: String) -> void:
-	if food_counts.has(food_type) and food_counts[food_type] > 0:
-		food_counts[food_type] -= 1
-		print(food_type + " count decremented. Remaining: " + str(food_counts[food_type]))
+# Generalized method to decrement the food count for either raw or cooked food
+func decrement_food(food_type: String, is_cooked: bool) -> void:
+	var target_dict = food_counts if not is_cooked else cooked_food_counts
+	if target_dict.has(food_type) and target_dict[food_type] > 0:
+		target_dict[food_type] -= 1
+		print(food_type + " count decremented. Remaining: " + str(target_dict[food_type]))
 	else:
 		print("Error: No " + food_type + " left to decrement!")
 

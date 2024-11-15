@@ -33,9 +33,10 @@ func _input_event(viewport: Viewport, event: InputEvent, shape_idx: int) -> void
 		if Gamedata.get_food_count(selected_food) >= 1:
 			# Spawn the prize with the selected food texture if the food count is 1 or more
 			spawn_prize(mouse_position, selected_food)
-			# Decrease the selected food count by 1
-			Gamedata.collect_food(selected_food)
-			print("You did it! Here's a prize.")
+			
+			# Decrease the selected food count by 1 (call the decrement function)
+			Gamedata.decrement_food(selected_food, false)  # 'false' indicates it's raw food on the stove
+			print("You did it! Here's a prize and your food count has been decremented.")
 		else:
 			print("You need at least 1 of the selected food to spawn a prize.")
 
@@ -76,3 +77,28 @@ func spawn_prize(position: Vector2, selected_food: String) -> void:
 	# Add the prize instance to the scene
 	get_parent().add_child(prize_instance)  # Assuming this is a child of the main scene
 	prize_instance.add_to_group("prize")  # Optional: Add to group for easy management
+	
+	# Add a timer to handle the 5-second queue free
+	add_timer_to_food(prize_instance)
+
+# Function to add a timer to the food item and free it after 5 seconds
+func add_timer_to_food(food_instance: Node) -> void:
+	# Create a new Timer node
+	var timer = Timer.new()
+	
+	# Set the timer duration to 5 seconds
+	timer.wait_time = 1
+	timer.one_shot = true  # This ensures the timer stops after 1 cycle
+	
+	
+	# Add the timer as a child of the food instance (so it stays with it)
+	food_instance.add_child(timer)
+	
+	# Start the timer
+	timer.start()
+
+# Called when the timer times out (after 5 seconds)
+func _on_cook_timer_timeout(food_instance: Node) -> void:
+	# Queue the food instance for removal
+	food_instance.queue_free()
+	print("Food item removed after 5 seconds.")

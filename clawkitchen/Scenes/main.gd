@@ -28,14 +28,14 @@ func _process(delta: float) -> void:
 	if food_counter_label:
 		food_counter_label.text = "Food Collected: " + str(Gamedata.food_collected)
 
-	# Handle cycling through food types
-	if Input.is_action_just_pressed("ui_up"):
+	# Handle cycling through food types using mouse wheel scroll
+	if Input.is_action_just_pressed("mouse_scroll_up"):
 		# Move up through the food types array
 		var new_index = (Gamedata.selected_item_index + 1) % Gamedata.food_types.size()
 		Gamedata.set_selected_item_by_index(new_index)
 		update_food_label()
 
-	elif Input.is_action_just_pressed("ui_down"):
+	elif Input.is_action_just_pressed("mouse_scroll_down"):
 		# Move down through the food types array
 		var new_index = (Gamedata.selected_item_index - 1 + Gamedata.food_types.size()) % Gamedata.food_types.size()
 		Gamedata.set_selected_item_by_index(new_index)
@@ -82,5 +82,5 @@ func restart_game() -> void:
 	get_tree().reload_current_scene()  # Reloads the current scene, effectively restarting the game
 
 # Timer timeout callback to update the request label with a new random food request
-func _on_request_timer_timeout() -> void:
-	update_request_label()
+#func _on_request_timer_timeout() -> void:
+#	update_request_label()
