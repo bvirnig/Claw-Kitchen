@@ -1,0 +1,8 @@
+[gd_scene load_steps=3 format=3 uid="uid://djluuwl8ndpub"]
+
+[ext_resource type="Script" path="res://food_2_cook_spawner.gd" id="1_l3hia"]
+[ext_resource type="PackedScene" uid="uid://cm2y2gnjs3smp" path="res://Scenes/food.tscn" id="2_t5y3i"]
+
+[node name="Food2CookSpawner" type="Node2D"]
+script = ExtResource("1_l3hia")
+food_scene = ExtResource("2_t5y3i")

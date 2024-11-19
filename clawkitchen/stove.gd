@@ -1,104 +1,95 @@
 extends Area2D
 
-@export var prize_scene: PackedScene  # Reference to the prize scene (the prize you want to spawn)
+@export var prize_scene: PackedScene  # Reference to the prize scene (the food you want to spawn)
 var current_capacity: int = 0
 var max_capacity: int = 4
+var food2cook_spawner: Node  # Reference to Food2CookSpawner
+
+# Track the current collision shape index for food placement
+var current_collision_shape_index : int = 0
+
+# Will store all collision shape global positions
+var collision_shapes_positions : Array = []
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	# Optional: Print initial state
 	print("Stove ready! Current capacity: %d, Max capacity: %d", current_capacity, max_capacity)
 
+	# Find the Food2CookSpawner node in the scene
+	food2cook_spawner = $Food2CookSpawner  # Change path to your actual scene structure
+	if food2cook_spawner == null:
+		print("Error: food2cook_spawner is not found!")
+
+	# Add this stove to the array and track its information
+	collision_shapes_positions = get_collision_shapes_positions()
+	print("Collision shapes positions: ", collision_shapes_positions)
+
+# Function to get the global positions of all the CollisionShape2D nodes of the stove
+func get_collision_shapes_positions() -> Array:
+	var collision_shapes_positions : Array = []
+	
+	# Loop through all children to find the CollisionShape2D nodes
+	for child in get_children():
+		if child is CollisionShape2D:
+			# Store the global position of each CollisionShape2D
+			print("Child CollisionShape2D local position: ", child.position)
+			print("Child CollisionShape2D global position: ", child.global_position)
+			collision_shapes_positions.append(child.global_position)
+
+	# Make sure we found the correct number of collision shapes (4 in this case)
+	if collision_shapes_positions.size() != 4:
+		print("Warning: Expected 4 CollisionShape2D nodes, found %d", collision_shapes_positions.size())
+	
+	return collision_shapes_positions
+
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	pass
 
-# Called when there is an input event on this Area2D node (e.g., mouse click).
-func _input_event(viewport: Viewport, event: InputEvent, shape_idx: int) -> void:
+# Called to handle all input events globally (including clicks outside the stove)
+func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
-		# Print the message when the stove is clicked
-		print("Hello, it's me a stove!")
-
+		# Get the mouse position relative to the global coordinates
 		var mouse_position = get_global_mouse_position()
-		
+
+		# Debug: Print mouse position when clicked anywhere on screen
+		print("Mouse position: ", mouse_position)
+
+		# Get the global position of the stove (ensures correct placement on the screen)
+		var stove_global_position = global_position  # The stove's global position
+
+		# Debug: Print the stove's global position
+		print("Stove global position: ", stove_global_position)
+
 		# Ensure GameData is loaded
 		if Gamedata == null:
 			print("Error: GameData singleton not found!")
 			return
-		
+
 		# Get the selected food type from GameData
 		var selected_food = Gamedata.get_selected_item()
-		
+
 		# Check if the selected food has been collected (count >= 1)
 		if Gamedata.get_food_count(selected_food) >= 1:
-			# Spawn the prize with the selected food texture if the food count is 1 or more
-			spawn_prize(mouse_position, selected_food)
-			
-			# Decrease the selected food count by 1 (call the decrement function)
-			Gamedata.decrement_food(selected_food, false)  # 'false' indicates it's raw food on the stove
-			print("You did it! Here's a prize and your food count has been decremented.")
+			# Ensure food2cook_spawner is valid before calling
+			if food2cook_spawner != null:
+				# Get the position of the current collision shape for food placement
+				var spawn_position = collision_shapes_positions[current_collision_shape_index]
+
+				# Debug: Print the spawn position for the food (from collision shapes)
+				print("Spawn position for food: ", spawn_position)
+
+				# Instantiate the food at the correct collision shape position
+				food2cook_spawner.instantiate_food_at_position(spawn_position)
+				
+				# Decrease the selected food count by 1 (call the decrement function)
+				Gamedata.decrement_food(selected_food, false)  # 'false' indicates it's raw food on the stove
+				print("You did it! Here's your food, and your food count has been decremented.")
+				
+				# Move to the next collision shape index (cycle back to 0 after 3)
+				current_collision_shape_index = (current_collision_shape_index + 1) % 4
+			else:
+				print("Error: food2cook_spawner is null!")
 		else:
 			print("You need at least 1 of the selected food to spawn a prize.")
-
-# Function to spawn a prize at a specific position with the selected food texture
-func spawn_prize(position: Vector2, selected_food: String) -> void:
-	# Ensure GameData is loaded and has food textures
-	if Gamedata == null:
-		print("Error: GameData singleton not found!")
-		return
-	
-	if Gamedata.food_textures.size() == 0:
-		print("Error: No food textures found in GameData!")
-		return
-	
-	# Check if the selected food exists in the food_types and food_textures
-	var selected_food_index = Gamedata.food_types.find(selected_food)
-	if selected_food_index == -1:
-		print("Error: Selected food not found in food_types!")
-		return
-	
-	# Get the texture for the selected food
-	var selected_texture = Gamedata.food_textures[selected_food_index]
-	
-	# Instantiate the prize scene (the food prize)
-	var prize_instance = prize_scene.instantiate()
-
-	# Set the selected texture for the prize's Sprite
-	var sprite = prize_instance.get_node("Sprite2D")  # Assuming the prize has a Sprite2D node
-	sprite.texture = selected_texture
-	
-	# Optionally: Set the food type and texture index for the prize instance
-	prize_instance.food_type = selected_food
-	prize_instance.texture_index = selected_food_index
-	
-	# Set the position of the prize
-	prize_instance.position = position
-	
-	# Add the prize instance to the scene
-	get_parent().add_child(prize_instance)  # Assuming this is a child of the main scene
-	prize_instance.add_to_group("prize")  # Optional: Add to group for easy management
-	
-	# Add a timer to handle the 5-second queue free
-	add_timer_to_food(prize_instance)
-
-# Function to add a timer to the food item and free it after 5 seconds
-func add_timer_to_food(food_instance: Node) -> void:
-	# Create a new Timer node
-	var timer = Timer.new()
-	
-	# Set the timer duration to 5 seconds
-	timer.wait_time = 1
-	timer.one_shot = true  # This ensures the timer stops after 1 cycle
-	
-	
-	# Add the timer as a child of the food instance (so it stays with it)
-	food_instance.add_child(timer)
-	
-	# Start the timer
-	timer.start()
-
-# Called when the timer times out (after 5 seconds)
-func _on_cook_timer_timeout(food_instance: Node) -> void:
-	# Queue the food instance for removal
-	food_instance.queue_free()
-	print("Food item removed after 5 seconds.")
