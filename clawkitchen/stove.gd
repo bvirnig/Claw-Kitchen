@@ -11,10 +11,13 @@ var current_collision_shape_index : int = 0
 # Will store all collision shape global positions
 var collision_shapes_positions : Array = []
 
+# Add an ID for each stove to uniquely identify it
+@export var stove_id: int  # Unique identifier for this stove, set manually or dynamically
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	# Optional: Print initial state
-	print("Stove ready! Current capacity: %d, Max capacity: %d", current_capacity, max_capacity)
+	print("Stove %d ready! Current capacity: %d, Max capacity: %d", stove_id, current_capacity, max_capacity)
 
 	# Find the Food2CookSpawner node in the scene
 	food2cook_spawner = $Food2CookSpawner  # Change path to your actual scene structure
@@ -23,7 +26,7 @@ func _ready() -> void:
 
 	# Add this stove to the array and track its information
 	collision_shapes_positions = get_collision_shapes_positions()
-	print("Collision shapes positions: ", collision_shapes_positions)
+	print("Collision shapes positions for stove %d: ", stove_id, collision_shapes_positions)
 
 # Function to get the global positions of all the CollisionShape2D nodes of the stove
 func get_collision_shapes_positions() -> Array:
@@ -35,17 +38,13 @@ func get_collision_shapes_positions() -> Array:
 			# Store the global position of each CollisionShape2D
 			print("Child CollisionShape2D local position: ", child.position)
 			print("Child CollisionShape2D global position: ", child.global_position)
-			collision_shapes_positions.append(child.global_position)
+			collision_shapes_positions.append(child.position)
 
 	# Make sure we found the correct number of collision shapes (4 in this case)
 	if collision_shapes_positions.size() != 4:
 		print("Warning: Expected 4 CollisionShape2D nodes, found %d", collision_shapes_positions.size())
 	
 	return collision_shapes_positions
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass
 
 # Called to handle all input events globally (including clicks outside the stove)
 func _unhandled_input(event: InputEvent) -> void:
@@ -60,7 +59,7 @@ func _unhandled_input(event: InputEvent) -> void:
 		var stove_global_position = global_position  # The stove's global position
 
 		# Debug: Print the stove's global position
-		print("Stove global position: ", stove_global_position)
+		print("Stove %d global position: ", stove_id, stove_global_position)
 
 		# Ensure GameData is loaded
 		if Gamedata == null:
@@ -78,18 +77,28 @@ func _unhandled_input(event: InputEvent) -> void:
 				var spawn_position = collision_shapes_positions[current_collision_shape_index]
 
 				# Debug: Print the spawn position for the food (from collision shapes)
-				print("Spawn position for food: ", spawn_position)
+				print("Stove %d: Spawn position for food: ", stove_id, spawn_position)
 
 				# Instantiate the food at the correct collision shape position
 				food2cook_spawner.instantiate_food_at_position(spawn_position)
 				
 				# Decrease the selected food count by 1 (call the decrement function)
 				Gamedata.decrement_food(selected_food, false)  # 'false' indicates it's raw food on the stove
-				print("You did it! Here's your food, and your food count has been decremented.")
+				print("Stove %d: You did it! Here's your food, and your food count has been decremented.", stove_id)
 				
 				# Move to the next collision shape index (cycle back to 0 after 3)
 				current_collision_shape_index = (current_collision_shape_index + 1) % 4
+				
+
+				# Ensure only one food item is placed per click. We stop here.
+				return  # Exit the function after placing one food item.
 			else:
 				print("Error: food2cook_spawner is null!")
 		else:
-			print("You need at least 1 of the selected food to spawn a prize.")
+			print("Stove %d: You need at least 1 of the selected food to spawn a prize.", stove_id)
+
+# Handling the collision for removing food
+func _on_body_entered(body: Node2D) -> void:
+	if body is Food:
+		body.queue_free()
+		print("Stove %d: Food removed from the stove.", stove_id)

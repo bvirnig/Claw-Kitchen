@@ -14,6 +14,7 @@ prize_scene = ExtResource("2_if7l8")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture_filter = 1
+scale = Vector2(5, 5)
 texture = ExtResource("2_g8rtr")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -36,7 +37,8 @@ shape = SubResource("RectangleShape2D_jxe0d")
 one_shot = true
 
 [node name="Food2CookSpawner" parent="." instance=ExtResource("4_tufs5")]
-food_scene = ExtResource("2_if7l8")
 
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
 [connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
 [connection signal="timeout" from="CookTimer" to="." method="_on_cook_timer_timeout"]
+[connection signal="timeout" from="CookTimer" to="Food2CookSpawner" method="_on_cook_timer_timeout"]

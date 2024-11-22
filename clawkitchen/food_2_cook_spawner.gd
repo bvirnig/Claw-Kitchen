@@ -2,7 +2,6 @@ extends Node2D
 
 @export var food_scene: PackedScene  # The scene to be instantiated for food
 var stove_positions: Array = []  # To store positions of all stoves
-var stove_collision_shapes: Array = []  # To store stove's collision shape positions
 
 # Called when the node enters the scene tree for the first time
 func _ready() -> void:
@@ -67,26 +66,31 @@ func instantiate_food_at_position(position: Vector2) -> void:
 	get_parent().add_child(food_instance)  # Assuming this is a child of the main scene
 	food_instance.add_to_group("food")  # Optional: Add to group for easy management
 
-	# Optionally: You can handle food expiration by adding a timer if needed
+	# Add a timer for this specific food instance
 	add_timer_to_food(food_instance)
 
 # Function to add a timer to the food item and free it after 5 seconds
 func add_timer_to_food(food_instance: Node) -> void:
-	# Create a new Timer node
+	# Create a new Timer node for this food instance
 	var timer = Timer.new()
 
 	# Set the timer duration to 5 seconds
-	timer.wait_time = 5
+	timer.wait_time = 5  # This ensures the food is removed after 5 seconds
 	timer.one_shot = true  # This ensures the timer stops after 1 cycle
 
 	# Add the timer as a child of the food instance (so it stays with it)
 	food_instance.add_child(timer)
 
+
 	# Start the timer
 	timer.start()
 
 # Called when the timer times out (after 5 seconds)
-func _on_food_timeout(food_instance: Node) -> void:
-	# Queue the food instance for removal
-	food_instance.queue_free()
-	print("Food item removed after 5 seconds.")
+func cooked():
+	$CookTimer.start()
+	queue_free()
+
+
+
+func _on_cook_timer_timeout() -> void:
+	queue_free()
