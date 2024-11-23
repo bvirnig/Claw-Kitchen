@@ -27,6 +27,14 @@ var food_types: Array = [
 	"stove"
 ]
 
+# Dictionary to define cooking times for each food type
+var cooking_times: Dictionary = {
+	"beef": 5.0,  # Beef takes 5 seconds
+	"cheese": 3.0,  # Cheese takes 3 seconds
+	"potato": 4.0,  # Potato takes 4 seconds
+	"stove": 2.0   # Example timer for stove-related dishes
+}
+
 # Dictionary to define recipes
 var recipes: Dictionary = {
 	"beef_cheese_burger": {
@@ -77,6 +85,10 @@ func decrement_food(food_type: String, is_cooked: bool) -> void:
 		print(food_type + " count decremented. Remaining: " + str(target_dict[food_type]))
 	else:
 		print("Error: No " + food_type + " left to decrement!")
+
+# Method to get the cooking time for a specific food type
+func get_cooking_time(food_type: String) -> float:
+	return cooking_times.get(food_type, 0.0)  # Default to 0.0 if food type is not found
 
 # Get the selected food texture based on the selected item index
 func get_selected_item() -> String:

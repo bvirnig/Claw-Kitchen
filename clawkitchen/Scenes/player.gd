@@ -1,4 +1,5 @@
 extends CharacterBody2D
+class_name Player
 
 func _ready() -> void:
 	# Start by setting the player position to the mouse position
