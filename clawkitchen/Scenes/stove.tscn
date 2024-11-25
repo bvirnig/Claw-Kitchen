@@ -11,7 +11,6 @@ size = Vector2(49, 49)
 [node name="Stove" type="Area2D" groups=["stove"]]
 script = ExtResource("1_43mb1")
 prize_scene = ExtResource("2_if7l8")
-stove_id = null
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture_filter = 1
@@ -40,6 +39,8 @@ one_shot = true
 [node name="Food2CookSpawner" parent="." instance=ExtResource("4_tufs5")]
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="body_exited" from="." to="." method="_on_body_exited"]
 [connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
 [connection signal="timeout" from="CookTimer" to="." method="_on_cook_timer_timeout"]
 [connection signal="timeout" from="CookTimer" to="Food2CookSpawner" method="_on_cook_timer_timeout"]
+[connection signal="slot_free" from="Food2CookSpawner" to="." method="_on_food_2_cook_spawner_slot_free"]

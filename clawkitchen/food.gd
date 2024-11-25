@@ -10,7 +10,7 @@ var fall_chance: float = 0.1
 var fall_speed: float = 150.0
 var is_falling: bool = false
 var has_fallen: bool = false
-const BASE_SPEED: float = 150
+const BASE_SPEED: float = 250
 
 var initial_position_y: float
 var direction: int = 1
@@ -30,8 +30,6 @@ func _ready() -> void:
 		var sprite = $Sprite2D
 		if sprite:
 			sprite.texture = prize_textures[texture_index]  # Directly assign the texture from the array
-	else:
-		print("Warning: Invalid texture index or prize_textures array is empty.")
 
 # Process each frame
 func _process(delta: float) -> void:
@@ -46,7 +44,6 @@ func _process(delta: float) -> void:
 
 	# Listen for the spacebar press to drop the food
 	if Input.is_action_just_pressed("ui_accept"):  # Spacebar or a custom input action
-		print("Spacebar pressed, food will start falling.")
 		if is_lifted:  # Only fall if the food is lifted
 			fall()  # Trigger the fall function when the spacebar is pressed
 
@@ -59,7 +56,6 @@ func move_left_right(delta: float) -> void:
 # Triggered when the claw hits the food
 func hit():
 	if not is_lifted and not has_fallen:
-		print("Food hit by claw at position: ", position)  # Debug: Log when food is hit
 		is_lifted = true
 		var timer_duration = randf_range(0.3, 4.0)  # Random fall timer duration
 	#	$FallTimer.start(timer_duration)  # Start a timer to decide if food falls

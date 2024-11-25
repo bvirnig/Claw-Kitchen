@@ -1,7 +1,7 @@
 extends Area2D
 class_name Claw
 
-const BASE_SPEED: float = 150.0
+const BASE_SPEED: float = 250.0
 const SCREEN_WIDTH: int = 425  # Adjusted screen width to account for border
 const SCREEN_HEIGHT: int = 648  # Fixed screen height
 
@@ -101,9 +101,6 @@ func pick_up_food(body: Food) -> void:
 
 func drop_food() -> void:
 	if is_holding and food:
-		# Check if the claw is over the collection area
-		if is_over_collection_area():
-			print("Food collected!")  # Log the food collection for debugging purposes
 		position.y = original_y_position  # Drop at original position
 		food = null  # Release the food
 		is_holding = false  # No longer holding food
@@ -120,7 +117,7 @@ func _on_body_exited(body: Node2D) -> void:
 	if is_moving_left_right and body is Food:
 		if randf() < 0.5:  # 50% chance
 			body.fall_signal()  # Call the fall signal on the food
-			print("fall signal triggered")
+
 
 
 func _on_collection_bin_body_entered(body: Node2D) -> void:

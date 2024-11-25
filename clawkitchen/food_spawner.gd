@@ -16,15 +16,6 @@ func _ready() -> void:
 func _spawn_prizes() -> void:
 	var prize_height = 50  # Assuming each prize has a height of 50 pixels
 
-	# Make sure GameData is loaded
-	if Gamedata == null:
-		print("Error: GameData singleton not found!")
-		return
-
-	# Check if food textures are available in GameData
-	if Gamedata.food_textures.size() == 0:
-		print("Error: food_textures array is empty in GameData!")
-		return
 
 	# Loop to spawn prizes in rows
 	for row in range(rows):
@@ -38,17 +29,12 @@ func _spawn_prizes() -> void:
 
 			# Calculate the X position for each prize in the row
 			var prize_x_position = (prize_index + 2.7) * (SCREEN_WIDTH / prizes_per_row * 0.7)
-			print("Spawning prize at X:", prize_x_position, " Y:", row_y_position)
 
 			# Randomly select a texture from GameData's food textures
 			var random_texture = Gamedata.food_textures[randi() % Gamedata.food_textures.size()]
-			print("Selected texture:", random_texture)
 
 			# Ensure prize_instance has the Sprite2D node
 			var sprite_node = prize_instance.get_node("Sprite2D")
-			if sprite_node == null:
-				print("Error: No Sprite2D node found in prize scene!")
-				return
 
 			# Set the texture for the prize
 			sprite_node.texture = random_texture
