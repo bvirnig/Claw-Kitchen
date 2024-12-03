@@ -1,8 +1,6 @@
 extends Area2D
 
 @export var prize_scene: PackedScene  # Reference to the prize scene (the food you want to spawn)
-var current_capacity: int = 0
-var max_capacity: int = 4
 var food2cook_spawner: Node  # Reference to Food2CookSpawner
 
 var collision_shapes_positions: Array = []  # Stores all collision shape global positions
@@ -14,20 +12,38 @@ var slot_occupied: Array = []  # Array to track if each slot is occupied (true =
 var player_in_stove: bool = false  # Track whether the player is in the stove area
 var is_active_stove: bool = false  # Flag to track if this stove is the active stove
 
+# Track the next slot index for food placement (Cycles through slots)
+var next_slot_index: int = 0
+
+# Timer node for periodically freeing up slots
+var stove_timer: Timer
+
 func _ready() -> void:
-	print("Stove %d ready! Current capacity: %d, Max capacity: %d", stove_id, current_capacity, max_capacity)
+	print("Stove %d ready! Slots will cycle sequentially.", stove_id)
 
 	food2cook_spawner = $Food2CookSpawner
 	if food2cook_spawner == null:
 		print("Error: food2cook_spawner is not found!")
 
+	# Initialize the collision shapes for the stove
 	collision_shapes_positions = get_collision_shapes_positions()
 	print("Collision shapes positions for stove %d: ", stove_id, collision_shapes_positions)
 
 	# Initialize the slot_occupied array with all slots as free (false)
 	slot_occupied = []
-	for i in range(max_capacity):
+
+	# Add a default number of slots (starting with 4 for simplicity)
+	for i in range(4):  # Starting with 4 slots, no fixed limit
 		slot_occupied.append(false)
+
+	# Get the reference to the StoveTimer node in the scene
+	stove_timer = $StoveTimer
+	if stove_timer == null:
+		print("Error: StoveTimer not found!")
+
+
+	# Start the StoveTimer
+	stove_timer.start()
 
 # Get all collision shape positions
 func get_collision_shapes_positions() -> Array:
@@ -52,12 +68,26 @@ func _on_body_entered(body: Node) -> void:
 	
 	# Check if the body entering is an instance of the Food class
 	if body is Food:  # Check if the object is an instance of the Food class
-		# Find the first free slot and occupy it
-		for i in range(max_capacity):
-			if !slot_occupied[i]:  # If the slot is free
-				slot_occupied[i] = true  # Mark this slot as occupied
-				print("Food entered stove %d. Slot %d is now occupied.", stove_id, i)
-				break  # Only occupy one slot per food item
+		# Find the next available slot and occupy it
+		var free_slot_index = find_next_slot()
+		if free_slot_index != -1:  # If there is an available slot
+			slot_occupied[free_slot_index] = true  # Mark this slot as occupied
+			body.occupied_slot_index = free_slot_index  # Store the occupied slot index in the food
+			print("Food entered stove %d. Slot %d is now occupied.", stove_id, free_slot_index)
+		else:
+			print("Stove %d is full. Cannot place more food.", stove_id)
+
+# Find the next available slot in a cyclic manner
+func find_next_slot() -> int:
+	# Search for the next free slot in a cyclic manner, even if all slots are occupied
+	for i in range(len(slot_occupied)):
+		var current_slot = (next_slot_index + i) % len(slot_occupied)
+		if !slot_occupied[current_slot]:  # If the slot is free
+			next_slot_index = (current_slot + 1) % len(slot_occupied)  # Update next slot for next food
+			return current_slot
+	
+	# If all slots are occupied, return -1 (though the code will attempt to reuse slots anyway)
+	return -1
 
 # Handle when another object exits the stove's area
 func _on_body_exited(body: Node) -> void:
@@ -75,14 +105,25 @@ func _on_body_exited(body: Node) -> void:
 	if body is Food:  # Check if the object is an instance of the Food class
 		# Debug: log the slot occupied before freeing it
 		print("Food of type %s exited stove %d. Attempting to free a slot.", body.name, stove_id)
-		# Find which slot this food was occupying and free it
-		for i in range(max_capacity):
-			if slot_occupied[i]:  # If the slot is occupied
-				print("Slot %d was occupied. Freeing it now.", i)
-				# Reset the slot to free
-				slot_occupied[i] = false
-				print("Slot %d is now free.", i)
-				break  # Only free one slot per food item
+		
+		# Free the slot occupied by the food
+		free_up_slot(body.occupied_slot_index)
+		print("Slot %d is now free.", body.occupied_slot_index)
+
+# This function will free up the slot when food exits
+func free_up_slot(slot_index: int) -> void:
+	if slot_index >= 0 and slot_index < len(slot_occupied):
+		slot_occupied[slot_index] = false  # Mark the slot as free
+		print("Stove %d: Slot %d is now free.", stove_id, slot_index)
+
+# The function to free up one slot every time the StoveTimer's timeout signal is emitted
+func _on_stove_timer_timeout() -> void:
+	# Try to find an occupied slot and free it
+	for i in range(len(slot_occupied)):
+		if slot_occupied[i]:
+			free_up_slot(i)
+			return  # Only free one slot per timer interval
+	print("No occupied slots to free in stove %d.", stove_id)
 
 # Check for mouse input and spawn food if conditions are met
 func _process(delta: float) -> void:
@@ -93,16 +134,8 @@ func _process(delta: float) -> void:
 
 		if Gamedata.get_food_count(selected_food) >= 1:
 			if food2cook_spawner != null:
-				# Find the first free slot
-				var free_slot_index = -1
-				print("Checking for free slots...")
-				for i in range(max_capacity):
-					if !slot_occupied[i]:  # If slot is free
-						free_slot_index = i
-						print("Found free slot at index ", i)
-						break
-
-				# If there's a free slot available, place food there
+				# Find the next available slot
+				var free_slot_index = find_next_slot()
 				if free_slot_index != -1:
 					var spawn_position = collision_shapes_positions[free_slot_index]
 					print("Stove %d: Spawn position for food: ", stove_id, spawn_position)
@@ -123,17 +156,3 @@ func _process(delta: float) -> void:
 
 		else:
 			print("Stove %d: Not enough food to spawn.", stove_id)
-
-# This function should be called when a food item finishes cooking or is removed from the stove
-# It will free up the slot, so food can be placed in that slot again.
-func free_up_slot(slot_index: int) -> void:
-	if slot_index >= 0 and slot_index < max_capacity:
-		slot_occupied[slot_index] = false
-		print("Stove %d: Slot %d is now free.", stove_id, slot_index)
-
-# This function will be called when the `queue_frees` signal is emitted from the food2cook_spawner
-func _on_food_2_cook_spawner_slot_free(slot_index: int) -> void:
-	# Debug: log the received slot index
-	print("Food finished cooking and the slot is being freed. Slot index: %d", slot_index)
-	# Call the free_up_slot function to unoccupy the slot
-	free_up_slot(slot_index)

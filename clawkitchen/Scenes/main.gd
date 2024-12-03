@@ -3,6 +3,9 @@ extends Node2D
 @onready var food_label = $FoodLabel  # Assuming you have a Label node named FoodLabel in the scene
 @onready var request_label = $RequestLabel  # Assuming you have a Label node named RequestLabel in the scene
 @onready var request_timer = $RequestTimer  # Assuming you have a Timer node named RequestTimer in the scene
+@onready var bottom_inventory_container = $BottomInventoryContainer  # New HBoxContainer for the bottom inventory
+@onready var cheese_label = $CheeseLabel  # Assuming you have a Label node named CheeseLabel in the scene
+@onready var food_label_timer = $FoodLabelTimer  # Assuming you have a Timer node named FoodLabelTimer in the scene
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -20,6 +23,15 @@ func _ready() -> void:
 	# Set the timer to repeat every 10 seconds and start it
 	request_timer.wait_time = 10.0  # Set the timer's interval to 10 seconds
 	request_timer.start()  # Start the timer
+
+	# Initialize the cheese label
+	update_cheese_label()
+
+	# Start the FoodLabelTimer to trigger every 1 second
+	food_label_timer.wait_time = 1.0  # Set interval to 1 second
+	food_label_timer.start()  # Start the timer
+
+
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
@@ -50,6 +62,9 @@ func update_food_label() -> void:
 	var selected_item = Gamedata.get_selected_item()  # Get the currently selected food type
 	var count = Gamedata.get_food_count(selected_item)  # Get the count for the selected food type
 	food_label.text = selected_item + ": " + str(count)  # Update the label with the current count
+	
+	# Every time the food label is updated, also update the cheese label
+	update_cheese_label()
 
 # Update the request label with a random food item from the first three items
 func update_request_label() -> void:
@@ -60,7 +75,7 @@ func update_request_label() -> void:
 	
 	# Only select from the first three items in food_types
 	var requestable_food_types = Gamedata.food_types.slice(0, 3)
-	var random_food = requestable_food_types[randi() % requestable_food_types.size()]
+	var random_food = requestable_food_types[randi() % requestable_food_types.size()]  # Randomly pick a food
 
 	# Set the request label's text to ask for the random food item
 	request_label.text = "Requesting: " + random_food
@@ -76,11 +91,41 @@ func _on_collection_bin_body_entered(body: Node2D) -> void:
 		
 		print("Total food collected in GameData: ", Gamedata.food_collected)  # Debug output
 
+		# Update both the FoodLabel and CheeseLabel
+		update_food_label()  # This also calls update_cheese_label internally
+
 # Restart the game by reloading the current scene
 func restart_game() -> void:
 	print("Restarting the game...")  # Debug message
 	get_tree().reload_current_scene()  # Reloads the current scene, effectively restarting the game
 
 # Timer timeout callback to update the request label with a new random food request
-#func _on_request_timer_timeout() -> void:
-#	update_request_label()
+func _on_request_timer_timeout() -> void:
+	update_request_label()
+
+# Update the CheeseLabel with the current number of cheese in inventory
+func update_cheese_label() -> void:
+	# Fetch the count of "cheese" from the GameData singleton
+	var cheese_count = Gamedata.get_food_count("cheese")  # Get the count of cheese
+	cheese_label.text = "X " + str(cheese_count)  # Update the label with the current cheese count
+
+# Simulate using cheese for cooking
+func use_cheese_for_cooking() -> void:
+	# Ensure the player has enough cheese to use
+	var cheese_count = Gamedata.get_food_count("cheese")
+	if cheese_count > 0:
+		# Use one cheese for cooking (you can customize this logic)
+		Gamedata.decrease_food_count("cheese", 1)  # Assuming you have a function to decrease the food count
+		print("Used one cheese for cooking!")  # Debug message
+		
+		# Update the cheese label after using it
+		update_cheese_label()
+		
+		# Update the food label after using cheese
+		update_food_label()
+	else:
+		print("Not enough cheese to cook!")  # Debug message if there's no cheese
+
+# Function to be called every 1 second by the timer to update the food label
+func _on_food_label_timer_timeout() -> void:
+	update_food_label()

@@ -149,3 +149,31 @@ func get_food_types() -> Array:
 # New method to return the food textures (you need to fill this array in the Inspector)
 func get_food_textures() -> Array:
 	return food_textures
+
+# **New Method for Updating Food Inventory Display**
+# This method updates the inventory UI based on the collected food counts
+func update_food_inventory(food_inventory_container: HBoxContainer) -> void:
+	# Clear the HBoxContainer before updating
+	food_inventory_container.clear_children()
+
+	# Loop through each food type in food_counts and add the sprite and count to the inventory UI
+	for food_type in food_types:
+		var food_count = get_food_count(food_type)
+		
+		# Only show food if we have collected any of that food type
+		if food_count > 0:
+			# Create a container for each food item (sprite + label)
+			var food_container = HBoxContainer.new()
+
+			# Create and add the sprite for the food type
+			var food_sprite = Sprite2D.new()
+			food_sprite.texture = food_textures[food_types.find(food_type)]  # Access texture based on index
+			food_container.add_child(food_sprite)
+
+			# Create and add the label showing how many of this food we have
+			var food_count_label = Label.new()
+			food_count_label.text = str(food_count)
+			food_container.add_child(food_count_label)
+
+			# Add the food container to the HBoxContainer
+			food_inventory_container.add_child(food_container)

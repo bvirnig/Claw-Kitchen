@@ -18,6 +18,7 @@ config/icon="res://icon.svg"
 [autoload]
 
 Gamedata="*res://Scenes/game_data.tscn"
+StoveData="*res://Scenes/stove_data.gd"
 
 [display]
 

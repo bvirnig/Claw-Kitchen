@@ -1,11 +1,9 @@
-[gd_scene load_steps=6 format=3 uid="uid://vfn4ab0abold"]
+[gd_scene load_steps=4 format=3 uid="uid://vfn4ab0abold"]
 
 [ext_resource type="Script" path="res://Scenes/gamedata.gd" id="1_e2hmg"]
-[ext_resource type="Texture2D" uid="uid://brpdpokpkssa7" path="res://Food Assets/white_cheese.png" id="3_cyrn0"]
-[ext_resource type="Texture2D" uid="uid://dyemwmdap874w" path="res://Food Assets/watermelon2.png" id="3_mxrwu"]
-[ext_resource type="Texture2D" uid="uid://bgpm0u8w1ddv2" path="res://Food Assets/water.png" id="4_iq23j"]
-[ext_resource type="Texture2D" uid="uid://dtd2augn4eff0" path="res://Food Assets/stove.png" id="5_0rq1p"]
+[ext_resource type="Texture2D" uid="uid://bwhsynoru4f5v" path="res://Food Assets/white_cheese_p.png" id="2_pejyw"]
+[ext_resource type="Texture2D" uid="uid://ch2qhmwvpvjxh" path="res://Food Assets/white_cheese_piece.png" id="3_5b633"]
 
 [node name="GameData" type="Node2D"]
 script = ExtResource("1_e2hmg")
-food_textures = [ExtResource("3_cyrn0"), ExtResource("3_mxrwu"), ExtResource("4_iq23j"), ExtResource("5_0rq1p")]
+food_textures = [ExtResource("2_pejyw"), ExtResource("3_5b633")]
