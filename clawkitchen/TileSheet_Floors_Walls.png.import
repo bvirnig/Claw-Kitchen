@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bwhsynoru4f5v"
-path="res://.godot/imported/white_cheese_p.png-ffa185a65e58b0ff135a52488af45b66.ctex"
+uid="uid://citm4o3boiegp"
+path="res://.godot/imported/TileSheet_Floors_Walls.png-b0a9ad3bf7f331ff946ff33c842d8ad1.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Food Assets/white_cheese_p.png"
-dest_files=["res://.godot/imported/white_cheese_p.png-ffa185a65e58b0ff135a52488af45b66.ctex"]
+source_file="res://TileSheet_Floors_Walls.png"
+dest_files=["res://.godot/imported/TileSheet_Floors_Walls.png-b0a9ad3bf7f331ff946ff33c842d8ad1.ctex"]
 
 [params]
 

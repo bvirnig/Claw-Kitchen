@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cusctt8umf7re"
-path="res://.godot/imported/butter2.png-1b0d84aa9b485cb83be1c2511e9a2f55.ctex"
+uid="uid://ypl0ymtufgt6"
+path="res://.godot/imported/olive_oil.png-3f90daee01d96b09c33e1d0050108043.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Food Assets/butter2.png"
-dest_files=["res://.godot/imported/butter2.png-1b0d84aa9b485cb83be1c2511e9a2f55.ctex"]
+source_file="res://AssetsBeingUsed/olive_oil.png"
+dest_files=["res://.godot/imported/olive_oil.png-3f90daee01d96b09c33e1d0050108043.ctex"]
 
 [params]
 

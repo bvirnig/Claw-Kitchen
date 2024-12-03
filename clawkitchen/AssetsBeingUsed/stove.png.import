@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cv8x4iwvqc8gc"
-path="res://.godot/imported/wine_red.png-52f9576b46d9214e7618fe8a6e04e5cf.ctex"
+uid="uid://dtd2augn4eff0"
+path="res://.godot/imported/stove.png-be4694b413fb43ab01af6221d7497b5b.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Food Assets/wine_red.png"
-dest_files=["res://.godot/imported/wine_red.png-52f9576b46d9214e7618fe8a6e04e5cf.ctex"]
+source_file="res://AssetsBeingUsed/stove.png"
+dest_files=["res://.godot/imported/stove.png-be4694b413fb43ab01af6221d7497b5b.ctex"]
 
 [params]
 

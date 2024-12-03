@@ -11,20 +11,20 @@ offset_bottom = 644.0
 texture = SubResource("CanvasTexture_7pq6k")
 
 [node name="wallL" type="ColorRect" parent="."]
-modulate = Color(1, 0.415686, 1, 1)
+modulate = Color(0.612576, 0.714494, 1, 1)
 z_index = 1
 offset_right = 17.0
 offset_bottom = 646.0
 
 [node name="wallR" type="ColorRect" parent="."]
-modulate = Color(1, 0.415686, 1, 1)
+modulate = Color(0.611765, 0.713726, 1, 1)
 offset_left = 431.0
 offset_top = -2.0
 offset_right = 450.0
 offset_bottom = 657.0
 
 [node name="wallFloor" type="ColorRect" parent="."]
-modulate = Color(1, 0.415686, 1, 1)
+modulate = Color(0.288798, 0.557294, 0.799354, 1)
 z_index = 1
 offset_left = 9.0
 offset_top = 622.0
@@ -32,14 +32,14 @@ offset_right = 435.0
 offset_bottom = 674.0
 
 [node name="wallTop" type="ColorRect" parent="."]
-modulate = Color(1, 0.415686, 1, 1)
-offset_left = 10.0
+modulate = Color(0.290196, 0.556863, 0.8, 1)
+offset_left = 16.0
 offset_top = -19.0
-offset_right = 440.0
-offset_bottom = 24.0
+offset_right = 431.0
+offset_bottom = 26.0
 
 [node name="wallTop2" type="ColorRect" parent="."]
-modulate = Color(0.627451, 0.415686, 1, 1)
+modulate = Color(0.32592, 0.3136, 0.56, 1)
 z_index = 1
 offset_left = 17.0
 offset_top = 24.0

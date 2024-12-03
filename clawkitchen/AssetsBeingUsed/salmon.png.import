@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cx0d8f21qah17"
-path="res://.godot/imported/bell_pepper.png-3b57c563a626fc6b4be2723c35033b4c.ctex"
+uid="uid://btaxx2xpuc48k"
+path="res://.godot/imported/salmon.png-2a6d14f2d9ca59a096b0486a371869e1.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Food Assets/bell_pepper.png"
-dest_files=["res://.godot/imported/bell_pepper.png-3b57c563a626fc6b4be2723c35033b4c.ctex"]
+source_file="res://AssetsBeingUsed/salmon.png"
+dest_files=["res://.godot/imported/salmon.png-2a6d14f2d9ca59a096b0486a371869e1.ctex"]
 
 [params]
 

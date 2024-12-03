@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://btaxx2xpuc48k"
-path="res://.godot/imported/salmon.png-7e2e18e2ad7a06ea5d89415aecd5e1f4.ctex"
+uid="uid://cv8x4iwvqc8gc"
+path="res://.godot/imported/wine_red.png-8f25c9487af14f3c4eef6d1861a17298.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Food Assets/salmon.png"
-dest_files=["res://.godot/imported/salmon.png-7e2e18e2ad7a06ea5d89415aecd5e1f4.ctex"]
+source_file="res://AssetsBeingUsed/wine_red.png"
+dest_files=["res://.godot/imported/wine_red.png-8f25c9487af14f3c4eef6d1861a17298.ctex"]
 
 [params]
 

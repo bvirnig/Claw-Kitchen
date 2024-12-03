@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://cm2y2gnjs3smp"]
 
 [ext_resource type="Script" path="res://food.gd" id="1_3r4rc"]
-[ext_resource type="Texture2D" uid="uid://bwhsynoru4f5v" path="res://Food Assets/white_cheese_p.png" id="2_uta4w"]
+[ext_resource type="Texture2D" uid="uid://bwhsynoru4f5v" path="res://AssetsBeingUsed/white_cheese_p.png" id="2_uta4w"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wdp8a"]
 size = Vector2(50, 50)

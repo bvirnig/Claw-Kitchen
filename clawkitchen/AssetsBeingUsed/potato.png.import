@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c81c7plc4c6a6"
-path="res://.godot/imported/mushroom_white_p.png-bca5ca835233365242e291878c9aed67.ctex"
+uid="uid://br1getktecxsv"
+path="res://.godot/imported/potato.png-5ebffad8b08fd19b6820afd3e54d64ba.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Food Assets/mushroom_white_p.png"
-dest_files=["res://.godot/imported/mushroom_white_p.png-bca5ca835233365242e291878c9aed67.ctex"]
+source_file="res://AssetsBeingUsed/potato.png"
+dest_files=["res://.godot/imported/potato.png-5ebffad8b08fd19b6820afd3e54d64ba.ctex"]
 
 [params]
 

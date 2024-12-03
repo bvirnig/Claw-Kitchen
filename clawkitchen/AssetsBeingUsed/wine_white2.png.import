@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b476h2vopa8ol"
-path="res://.godot/imported/meat2.png-be41383c05e1affde7344f3a64cbd723.ctex"
+uid="uid://csyiaa22638se"
+path="res://.godot/imported/wine_white2.png-6a15e6f8d27182f3932be204a2bcf8ce.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Food Assets/meat2.png"
-dest_files=["res://.godot/imported/meat2.png-be41383c05e1affde7344f3a64cbd723.ctex"]
+source_file="res://AssetsBeingUsed/wine_white2.png"
+dest_files=["res://.godot/imported/wine_white2.png-6a15e6f8d27182f3932be204a2bcf8ce.ctex"]
 
 [params]
 

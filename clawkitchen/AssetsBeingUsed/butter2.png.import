@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dtd2augn4eff0"
-path="res://.godot/imported/stove.png-2b83af182d9763c91decdab02691bace.ctex"
+uid="uid://cusctt8umf7re"
+path="res://.godot/imported/butter2.png-b58cfb5e6cd1c64720ad9a4537ab9032.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Food Assets/stove.png"
-dest_files=["res://.godot/imported/stove.png-2b83af182d9763c91decdab02691bace.ctex"]
+source_file="res://AssetsBeingUsed/butter2.png"
+dest_files=["res://.godot/imported/butter2.png-b58cfb5e6cd1c64720ad9a4537ab9032.ctex"]
 
 [params]
 

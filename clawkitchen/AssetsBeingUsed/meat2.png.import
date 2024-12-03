@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://br1getktecxsv"
-path="res://.godot/imported/potato.png-0dc5b5b989abdfc5dd8b4365676f22bb.ctex"
+uid="uid://b476h2vopa8ol"
+path="res://.godot/imported/meat2.png-1dbc549c219ed1219c520793d5b1da03.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Food Assets/potato.png"
-dest_files=["res://.godot/imported/potato.png-0dc5b5b989abdfc5dd8b4365676f22bb.ctex"]
+source_file="res://AssetsBeingUsed/meat2.png"
+dest_files=["res://.godot/imported/meat2.png-1dbc549c219ed1219c520793d5b1da03.ctex"]
 
 [params]
 
