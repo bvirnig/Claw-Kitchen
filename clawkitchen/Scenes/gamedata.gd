@@ -2,54 +2,62 @@ extends Node
 
 @export var food_textures: Array = []  # Array of textures for each food type
 
-# Dictionary to track food types and their counts
+# Updated food types and counts
 var food_counts: Dictionary = {
-	"beef": 0,
 	"cheese": 0,
 	"potato": 0,
-	"stove": 0  # Add more food types as needed
+	"mushroom": 0,
+	"bell_pepper": 0,
+	"butter": 0,
+	"olive_oil": 0,
+	"beef": 0,
+	"fish": 0,
+	"red_wine": 0,
+	"white_wine": 0,
+	"stove": 0,
+	"bomb": 0,  # Added bomb food type
+	"energy_boost": 0  # Added energy_boost food type
 }
 
-# Dictionary to track cooked food counts by type
+# Updated cooked food counts
 var cooked_food_counts: Dictionary = {
-	"beef": 0,
 	"cheese": 0,
 	"potato": 0,
-	"stove": 0  # Add more food types as needed
+	"mushroom": 0,
+	"bell_pepper": 0,
+	"butter": 0,
+	"olive_oil": 0,
+	"beef": 0,
+	"fish": 0,
+	"red_wine": 0,
+	"white_wine": 0,
+	"stove": 0,
+	"bomb": 0,  # Added bomb cooked food count
+	"energy_boost": 0  # Added energy_boost cooked food count
 }
 
 var food_collected: int = 0
 var selected_item_index: int = 0
 var food_types: Array = [
-	"beef",
-	"cheese",
-	"potato",
-	"stove"
+	"cheese", "potato", "mushroom", "bell_pepper", "butter", "olive_oil", 
+	"beef", "fish", "red_wine", "white_wine", "stove", "bomb", "energy_boost"  # Added energy_boost to the food types array
 ]
 
-# Dictionary to define cooking times for each food type
+# Updated cooking times for each food type
 var cooking_times: Dictionary = {
-	"beef": 5.0,  # Beef takes 5 seconds
 	"cheese": 3.0,  # Cheese takes 3 seconds
-	"potato": 4.0,  # Potato takes 4 seconds
-	"stove": 2.0   # Example timer for stove-related dishes
-}
-
-# Dictionary to define recipes
-var recipes: Dictionary = {
-	"beef_cheese_burger": {
-		"beef": 1,  # 1 beef needed
-		"cheese": 1,  # 1 cheese needed
-		"potato": 0  # no potato needed
-	},
-	"cheese_fries": {
-		"cheese": 1,
-		"potato": 1
-	},
-	"stove_dish": {
-		"beef": 1,
-		"stove": 1
-	}
+	"potato": 4.0,   # Potato takes 4 seconds
+	"mushroom": 3.5, # Mushroom takes 3.5 seconds
+	"bell_pepper": 2.5, # Bell pepper takes 2.5 seconds
+	"butter": 2.0,   # Butter takes 2 seconds
+	"olive_oil": 1.5, # Olive oil takes 1.5 seconds
+	"beef": 5.0,     # Beef takes 5 seconds
+	"fish": 4.0,     # Fish takes 4 seconds
+	"red_wine": 3.0, # Red wine takes 3 seconds
+	"white_wine": 3.0, # White wine takes 3 seconds
+	"stove": 2.0,     # Stove-related dishes take 2 seconds
+	"bomb": 0.0,  # Bomb doesn't need cooking time
+	"energy_boost": 1.0  # Set cooking time for energy boost (example: 1 second)
 }
 
 # Method to increment the food count for a specific type
@@ -63,6 +71,16 @@ func collect_food(food_type: String) -> void:
 
 # Method to increment the cooked food count for a specific type
 func cook_food(food_type: String) -> void:
+	# No cooking for bomb, so we'll return immediately if it's a bomb
+	if food_type == "bomb":
+		print("Cannot cook a bomb!")
+		return
+	
+	# No cooking for energy_boost (if it's instant), otherwise add your logic here
+	if food_type == "energy_boost":
+		print("Energy Boost is ready! Instant item!")
+		return
+	
 	if cooked_food_counts.has(food_type):
 		cooked_food_counts[food_type] += 1
 	else:
@@ -79,6 +97,11 @@ func get_cooked_food_count(food_type: String) -> int:
 
 # Generalized method to decrement the food count for either raw or cooked food
 func decrement_food(food_type: String, is_cooked: bool) -> void:
+	# No decrementing of bomb or energy_boost if cooked, as they're not cooked
+	if food_type == "bomb" or food_type == "energy_boost":
+		print("Cannot decrement bomb or energy boost from cooked food!")
+		return
+	
 	var target_dict = food_counts if not is_cooked else cooked_food_counts
 	if target_dict.has(food_type) and target_dict[food_type] > 0:
 		target_dict[food_type] -= 1
@@ -103,77 +126,10 @@ func set_selected_item_by_index(index: int) -> void:
 		selected_item_index = index
 		print("Selected item set to: " + food_types[selected_item_index])
 
-# Method to check if a recipe can be crafted
-func can_craft_recipe(recipe_name: String) -> bool:
-	if recipes.has(recipe_name):
-		var recipe = recipes[recipe_name]
-		
-		# Check if we have enough ingredients for the recipe
-		for ingredient in recipe.keys():
-			var required_amount = recipe[ingredient]
-			if ingredient in cooked_food_counts:
-				if cooked_food_counts[ingredient] < required_amount:
-					return false
-			elif ingredient in food_counts:
-				if food_counts[ingredient] < required_amount:
-					return false
-			else:
-				return false
-		return true
-	return false
-
-# Method to craft a recipe
-func craft_recipe(recipe_name: String) -> void:
-	if can_craft_recipe(recipe_name):
-		var recipe = recipes[recipe_name]
-		
-		# Decrement the ingredients from the respective food counts
-		for ingredient in recipe.keys():
-			var required_amount = recipe[ingredient]
-			if ingredient in cooked_food_counts:
-				cooked_food_counts[ingredient] -= required_amount
-				print("Used " + str(required_amount) + " " + ingredient + " from cooked food.")
-			elif ingredient in food_counts:
-				food_counts[ingredient] -= required_amount
-				print("Used " + str(required_amount) + " " + ingredient + " from raw food.")
-		
-		# Optionally, you can add a new crafted item or food item here.
-		print("Crafted: " + recipe_name)
-	else:
-		print("Not enough ingredients to craft: " + recipe_name)
-
-# New method to return the food types (array of food items)
+# Function to return food_types array
 func get_food_types() -> Array:
 	return food_types
 
-# New method to return the food textures (you need to fill this array in the Inspector)
+# Function to return food_textures array
 func get_food_textures() -> Array:
 	return food_textures
-
-# **New Method for Updating Food Inventory Display**
-# This method updates the inventory UI based on the collected food counts
-func update_food_inventory(food_inventory_container: HBoxContainer) -> void:
-	# Clear the HBoxContainer before updating
-	food_inventory_container.clear_children()
-
-	# Loop through each food type in food_counts and add the sprite and count to the inventory UI
-	for food_type in food_types:
-		var food_count = get_food_count(food_type)
-		
-		# Only show food if we have collected any of that food type
-		if food_count > 0:
-			# Create a container for each food item (sprite + label)
-			var food_container = HBoxContainer.new()
-
-			# Create and add the sprite for the food type
-			var food_sprite = Sprite2D.new()
-			food_sprite.texture = food_textures[food_types.find(food_type)]  # Access texture based on index
-			food_container.add_child(food_sprite)
-
-			# Create and add the label showing how many of this food we have
-			var food_count_label = Label.new()
-			food_count_label.text = str(food_count)
-			food_container.add_child(food_count_label)
-
-			# Add the food container to the HBoxContainer
-			food_inventory_container.add_child(food_container)

@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://vfn4ab0abold"]
+[gd_scene load_steps=15 format=3 uid="uid://vfn4ab0abold"]
 
 [ext_resource type="Script" path="res://Scenes/gamedata.gd" id="1_e2hmg"]
 [ext_resource type="Texture2D" uid="uid://bwhsynoru4f5v" path="res://AssetsBeingUsed/white_cheese_p.png" id="2_pejyw"]
@@ -11,7 +11,10 @@
 [ext_resource type="Texture2D" uid="uid://c81c7plc4c6a6" path="res://AssetsBeingUsed/mushroom_white_p.png" id="9_fbbta"]
 [ext_resource type="Texture2D" uid="uid://cx0d8f21qah17" path="res://AssetsBeingUsed/bell_pepper.png" id="10_t63h4"]
 [ext_resource type="Texture2D" uid="uid://cusctt8umf7re" path="res://AssetsBeingUsed/butter2.png" id="11_05rtj"]
+[ext_resource type="Texture2D" uid="uid://dtd2augn4eff0" path="res://AssetsBeingUsed/stove.png" id="12_bis7i"]
+[ext_resource type="Texture2D" uid="uid://73r1sppryr6l" path="res://AssetsBeingUsed/bomb_character1.png" id="13_86md8"]
+[ext_resource type="Texture2D" uid="uid://d2ivjfm68eox8" path="res://AssetsBeingUsed/energy_bar.png" id="14_ck866"]
 
 [node name="GameData" type="Node2D"]
 script = ExtResource("1_e2hmg")
-food_textures = [ExtResource("2_pejyw"), ExtResource("3_wflrr"), ExtResource("4_k5oln"), ExtResource("5_hevks"), ExtResource("6_ejp2w"), ExtResource("7_5r3cw"), ExtResource("8_7ci46"), ExtResource("9_fbbta"), ExtResource("10_t63h4"), ExtResource("11_05rtj")]
+food_textures = [ExtResource("2_pejyw"), ExtResource("3_wflrr"), ExtResource("9_fbbta"), ExtResource("10_t63h4"), ExtResource("11_05rtj"), ExtResource("8_7ci46"), ExtResource("6_ejp2w"), ExtResource("7_5r3cw"), ExtResource("4_k5oln"), ExtResource("5_hevks"), ExtResource("12_bis7i"), ExtResource("13_86md8"), ExtResource("14_ck866")]

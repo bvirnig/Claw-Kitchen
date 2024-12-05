@@ -11,8 +11,8 @@ func instantiate_food_at_position(position: Vector2, selected_food: String) -> v
 		return
 	
 	# Fetch the food types and textures from GameData
-	var food_types = Gamedata.get_food_types()  # Assuming GameData has a method to get food types
-	var food_textures = Gamedata.get_food_textures()  # Assuming GameData has a method to get food textures
+	var food_types = Gamedata.get_food_types()  # This should now work
+	var food_textures = Gamedata.get_food_textures()  # This should now work
 
 	# Get the selected food from GameData
 	var selected_food_index = food_types.find(selected_food)
@@ -48,6 +48,9 @@ func instantiate_food_at_position(position: Vector2, selected_food: String) -> v
 	get_parent().add_child(food_instance)  # Assuming this is a child of the main scene
 	food_instance.add_to_group("food")  # Optional: Add to group for easy management
 
+	# Decrement the uncooked food count (because the food is now on the stove)
+	Gamedata.decrement_food(selected_food, false)  # False for uncooked food
+
 	# Add a timer for this specific food instance (optional)
 	add_timer_to_food(food_instance, selected_food)
 
@@ -59,10 +62,18 @@ func add_timer_to_food(food_instance: Node, food_type: String) -> void:
 	timer.one_shot = true
 
 	food_instance.add_child(timer)
-	timer.connect("timeout", Callable(self, "_on_food_cook_timeout").bind(food_instance))
+	timer.connect("timeout", Callable(self, "_on_food_cook_timeout").bind(food_instance, food_type))  # Pass the food_type to the timeout function
 	timer.start()
 
-func _on_food_cook_timeout(food_instance: Node) -> void:
+func _on_food_cook_timeout(food_instance: Node, food_type: String) -> void:
+	# Increment the cooked food count in Gamedata when food is cooked
+	Gamedata.cook_food(food_type)  # Increment the cooked food count in GameData
+
+	# Print the food that was cooked
 	print("Food cooked: ", food_instance)
+
+	# Queue the food instance for removal from the scene
 	food_instance.queue_free()
+
+	# Emit the signal to notify that a slot is free
 	emit_signal("slot_free")

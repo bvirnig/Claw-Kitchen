@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://d2ivjfm68eox8"
-path="res://.godot/imported/energy_bar.png-d3844bb40cc3ff9ae0a424e7da587ce3.ctex"
+path="res://.godot/imported/energy_bar.png-19b1fa97f05c8198f6c6bf161075bc08.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Food Assets/energy_bar.png"
-dest_files=["res://.godot/imported/energy_bar.png-d3844bb40cc3ff9ae0a424e7da587ce3.ctex"]
+source_file="res://AssetsBeingUsed/energy_bar.png"
+dest_files=["res://.godot/imported/energy_bar.png-19b1fa97f05c8198f6c6bf161075bc08.ctex"]
 
 [params]
 
