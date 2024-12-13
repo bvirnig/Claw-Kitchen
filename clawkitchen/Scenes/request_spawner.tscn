@@ -1,0 +1,8 @@
+[gd_scene load_steps=3 format=3 uid="uid://bfi44bn1phq1"]
+
+[ext_resource type="Script" path="res://Scenes/request_spawner.gd" id="1_l1jjx"]
+[ext_resource type="PackedScene" uid="uid://ylm63nph2e3b" path="res://Scenes/request_label.tscn" id="2_dw0ok"]
+
+[node name="RequestSpawner" type="Node2D"]
+script = ExtResource("1_l1jjx")
+request_scene = ExtResource("2_dw0ok")

@@ -24,10 +24,10 @@ func _ready() -> void:
 func _spawn_prizes() -> void:
 	var prize_height = 50  # Assuming each prize has a height of 50 pixels
 
-	# Step 1: Randomly select 3 distinct food types
+	# Step 1: Randomly select 5 distinct food types
 	selected_food_types = _select_random_food_types()
 
-	# Step 2: Randomly assign one of the 3 food types to all prizes
+	# Step 2: Randomly assign one of the 5 food types to all prizes
 	var food_distribution = _distribute_foods_randomly(selected_food_types)
 
 	# Remove all previously spawned prizes before spawning new ones
@@ -88,10 +88,10 @@ func _remove_previous_prizes() -> void:
 	# Clear the list after removal
 	spawned_prizes.clear()
 
-# Function to randomly select 3 distinct food types from the Gamedata
+# Function to randomly select 5 distinct food types from the Gamedata
 func _select_random_food_types() -> Array:
 	var selected_food_types = []
-	while selected_food_types.size() < 3:
+	while selected_food_types.size() < 5:
 		var random_index = randi() % Gamedata.food_types.size()  # Ensure random selection within bounds
 		# Debugging log to check random index
 		print("Random index selected for food type: ", random_index)
@@ -100,7 +100,7 @@ func _select_random_food_types() -> Array:
 			selected_food_types.append(food_type)
 	return selected_food_types
 
-# Function to randomly assign one of the 3 food types to each prize
+# Function to randomly assign one of the 5 food types to each prize
 func _distribute_foods_randomly(food_types: Array) -> Array:
 	var distribution = []
 	var total_prizes = rows * prizes_per_row

@@ -1,7 +1,7 @@
-[gd_scene load_steps=21 format=3 uid="uid://0ysng1aa0llg"]
+[gd_scene load_steps=22 format=3 uid="uid://0ysng1aa0llg"]
 
 [ext_resource type="Script" path="res://Scenes/main.gd" id="1_oplfw"]
-[ext_resource type="PackedScene" uid="uid://b2juf3rejm26g" path="res://Scenes/kitchen_background.tscn" id="2_253q7"]
+[ext_resource type="PackedScene" path="res://Scenes/kitchen_background.tscn" id="2_253q7"]
 [ext_resource type="PackedScene" uid="uid://cwoh3durcjkvg" path="res://Scenes/claw_background.tscn" id="2_yh4ff"]
 [ext_resource type="PackedScene" uid="uid://y0ys5si0631" path="res://Scenes/prize_spawner.tscn" id="4_l578h"]
 [ext_resource type="PackedScene" uid="uid://d0t633hy5ht60" path="res://Scenes/claw.tscn" id="5_gkbhi"]
@@ -17,6 +17,7 @@
 [ext_resource type="Texture2D" uid="uid://c81c7plc4c6a6" path="res://AssetsBeingUsed/mushroom_white_p.png" id="14_s6r1w"]
 [ext_resource type="Texture2D" uid="uid://cx0d8f21qah17" path="res://AssetsBeingUsed/bell_pepper.png" id="15_dl3tg"]
 [ext_resource type="Texture2D" uid="uid://cusctt8umf7re" path="res://AssetsBeingUsed/butter2.png" id="16_jamvw"]
+[ext_resource type="PackedScene" uid="uid://bfi44bn1phq1" path="res://Scenes/request_spawner.tscn" id="18_venf7"]
 
 [sub_resource type="CanvasTexture" id="CanvasTexture_q6qmv"]
 
@@ -226,8 +227,10 @@ autostart = true
 [node name="InventoryUpdateTimer" type="Timer" parent="."]
 autostart = true
 
+[node name="RequestSpawner" parent="." instance=ExtResource("18_venf7")]
+
 [connection signal="body_entered" from="CollectionBin" to="." method="_on_collection_bin_body_entered"]
 [connection signal="timeout" from="RequestLabelCheckTimer" to="." method="_on_request_label_check_timer_timeout"]
 [connection signal="timeout" from="RequestLabelCheckTimer" to="." method="_on_request_timer_timeout"]
-[connection signal="timeout" from="InventoryUpdateTimer" to="." method="_on_inventory_update_timer_timeout"]
 [connection signal="timeout" from="InventoryUpdateTimer" to="." method="_on_food_label_timer_timeout"]
+[connection signal="timeout" from="InventoryUpdateTimer" to="." method="_on_inventory_update_timer_timeout"]

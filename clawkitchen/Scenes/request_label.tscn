@@ -1,0 +1,25 @@
+[gd_scene load_steps=4 format=3 uid="uid://ylm63nph2e3b"]
+
+[ext_resource type="Script" path="res://request_label.gd" id="1_6jr2x"]
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_0sm8t"]
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_5hqpf"]
+
+[node name="Request Label" type="Area2D"]
+script = ExtResource("1_6jr2x")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+modulate = Color(1, 1, 0.447059, 1)
+scale = Vector2(75, 75)
+texture = SubResource("CanvasTexture_0sm8t")
+
+[node name="Sprite2D2" type="Sprite2D" parent="."]
+texture_filter = 1
+scale = Vector2(2, 2)
+texture = SubResource("CanvasTexture_5hqpf")
+
+[node name="RequestCheckTimer" type="Timer" parent="."]
+autostart = true
+
+[connection signal="timeout" from="RequestCheckTimer" to="." method="_on_request_check_timer_timeout"]

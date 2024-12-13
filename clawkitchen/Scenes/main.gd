@@ -1,9 +1,6 @@
 extends Node2D
 
 @onready var food_label = $FoodLabel  # Assuming you have a Label node named FoodLabel in the scene
-@onready var request_label = $RequestLabel  # Assuming you have a Label node named RequestLabel in the scene
-@onready var request_timer = $RequestTimer  # Assuming you have a Timer node named RequestTimer in the scene
-@onready var bottom_inventory_container = $BottomInventoryContainer  # New HBoxContainer for the bottom inventory
 @onready var cheese_label = $CheeseLabel  # Assuming you have a Label node named CheeseLabel in the scene
 @onready var food_label_timer = $FoodLabelTimer  # Assuming you have a Timer node named FoodLabelTimer in the scene
 
@@ -32,16 +29,9 @@ func _ready() -> void:
 	# Initialize the food label with the selected item and its count
 	update_food_label()
 
-	# Set the initial request label to a food item (e.g., "cooked potato")
-	update_request_label()
-
 	# Start the inventory update timer to trigger every 1 second (independent of food_label)
 	inventory_update_timer.wait_time = 1.0  # Set interval to 1 second
 	inventory_update_timer.start()  # Start the timer
-
-	# Start the request label check timer (this will check every second)
-	request_label_check_timer.wait_time = 1.0  # Check every second
-	request_label_check_timer.start()  # Start checking for requested food every second
 
 	# Update all food labels immediately
 	update_food_labels()
@@ -64,9 +54,6 @@ func _process(delta: float) -> void:
 		Gamedata.set_selected_item_by_index(new_index)
 		update_food_label()
 
-	# Detect if the "0" key is pressed to restart the game
-	if Input.is_action_just_pressed("ui_cancel"):  # Replace "ui_cancel" with the input action of your choice
-		restart_game()
 
 # Update the food label to show the selected food and its count
 func update_food_label() -> void:
@@ -76,81 +63,6 @@ func update_food_label() -> void:
 	
 	# Every time the food label is updated, also update the cheese label
 	update_cheese_label()
-
-# Function to check and update the request label every second
-func check_and_update_request_label() -> void:
-	# Ensure Gamedata is loaded
-	if Gamedata == null:
-		print("Error: GameData singleton not found!")
-		return
-	
-	# Get the requested food from the request label
-	var requested_food = request_label.text.strip_edges().split(":")[1].strip_edges()  # Extract requested food name
-	var food_type = requested_food.to_lower()  # Match case sensitivity with Gamedata
-
-	# Log the request label and check inventory
-	print("Checking request label: " + requested_food)  # Debug log for checking request label
-	print("Checking inventory for cooked food: " + food_type)  # Debug log for checking inventory
-
-	# Check if the requested cooked food exists in the inventory
-	if Gamedata.get_food_count(food_type) > 0:
-		print("Request for " + requested_food + " is satisfied.")  # Log that the food is available
-		# If the requested food is in the inventory, update the request to a new food
-		update_request_label()
-
-# Update the request label with a random cooked food from the first 10 food types
-func update_request_label() -> void:
-	# Ensure Gamedata is loaded
-	if Gamedata == null:
-		print("Error: GameData singleton not found!")
-		return
-	
-	# Get the first 10 food types in the food array
-	var food_types_subset = Gamedata.food_types.slice(0, 10)
-
-	# List of cooked food types (you can customize this list with more cooked items)
-	var cooked_food_types = []
-	for food in food_types_subset:
-		cooked_food_types.append("cooked " + food)
-
-	# Select a random food item from the cooked food list
-	var random_cooked_food = cooked_food_types[randi() % cooked_food_types.size()]
-	request_label.text = "Requesting: " + random_cooked_food
-	print("Requesting cooked food: " + random_cooked_food)  # Debug log
-
-# Called when the food enters the collection bin
-func _on_collection_bin_body_entered(body: Node2D) -> void:
-	if body is Food:
-		# Collect the food in the GameData singleton
-		body.collect()  # Call the Food's collect method
-		
-		# Pass the food's type to collect_food function in GameData
-		Gamedata.collect_food(body.food_type)  # Pass the food type from the body (the Food object)
-		
-		print("Collected food: ", body.food_type)  # Debug output
-
-		# Update both the FoodLabel and CheeseLabel
-		update_food_labels()  # This updates all food-related labels
-
-		# Check if the collected food matches the requested food and update the request label
-		var requested_food = request_label.text.strip_edges().split(":")[1].strip_edges()  # Extract requested food name
-		var food_type = requested_food.to_lower()  # Match case sensitivity with Gamedata
-
-		# If the food matches the request, update the request label
-		if food_type == body.food_type:
-			print("Collected " + body.food_type + " matches the request!")
-			# Only reset the request if the food matches
-			update_request_label()  # Reset the request label with a new food
-
-# Restart the game by reloading the current scene
-func restart_game() -> void:
-	print("Restarting the game...")  # Debug message
-	get_tree().reload_current_scene()  # Reloads the current scene, effectively restarting the game
-
-# Timer timeout callback to check and update the request label if needed
-func _on_request_label_check_timer_timeout() -> void:
-	# Check the request label and log the inventory status
-	check_and_update_request_label()
 
 # Update the CheeseLabel with the current number of cheese in inventory
 func update_cheese_label() -> void:
@@ -207,3 +119,17 @@ func update_food_labels() -> void:
 				if red_wine_label: red_wine_label.text = "X " + str(food_count)
 			"white_wine":
 				if white_wine_label: white_wine_label.text = "X " + str(food_count)
+
+# Called when the food enters the collection bin
+func _on_collection_bin_body_entered(body: Node2D) -> void:
+	if body is Food:
+		# Collect the food in the GameData singleton
+		body.collect()  # Call the Food's collect method
+		
+		# Pass the food's type to collect_food function in GameData
+		Gamedata.collect_food(body.food_type)  # Pass the food type from the body (the Food object)
+		
+		print("Collected food: ", body.food_type)  # Debug output
+
+		# Update both the FoodLabel and CheeseLabel
+		update_food_labels()  # This updates all food-related labels
