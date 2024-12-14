@@ -1,7 +1,7 @@
 extends Area2D
 class_name Claw
 
-const BASE_SPEED: float = 250.0
+const BASE_SPEED: float = 300.0
 const SCREEN_WIDTH: int = 425  # Adjusted screen width to account for border
 const SCREEN_HEIGHT: int = 648  # Fixed screen height
 
@@ -17,11 +17,17 @@ var food: Food = null  # Store the currently held food item
 func _ready() -> void:
 	position.x = 6  # Set starting x position to 6 (5 pixels from the left edge)
 	position.y = original_y_position  # Set the starting y position to 150
-	update_speed()
+	update_speed()  # Initial speed update
 
 func update_speed() -> void:
-	# You can leave this function in place to update speed later when you add levels.
-	speed = BASE_SPEED  # Keep it simple for now
+	# Check the number of energy_boost in the food_counts dictionary of Gamedata singleton
+	var energy_boost_count = Gamedata.food_counts.get("energy_boost", 0)  # Get count of energy_boost, default to 0 if not found
+	
+	# If one or more energy_boosts are in the inventory, increase speed
+	if energy_boost_count >= 1:
+		speed = BASE_SPEED + 75  # Increase speed by 50 if energy_boost count >= 1
+	else:
+		speed = BASE_SPEED  # Default speed if no energy_boost in inventory
 
 func _process(delta: float) -> void:
 	handle_input()
@@ -118,7 +124,9 @@ func _on_body_exited(body: Node2D) -> void:
 		if randf() < 0.5:  # 50% chance
 			body.fall_signal()  # Call the fall signal on the food
 
-
-
 func _on_collection_bin_body_entered(body: Node2D) -> void:
-	pass # Replace with function body.
+	pass # Replace with function body
+
+
+func _on_energy_check_timer_timeout() -> void:
+	update_speed()  # Update the claw's speed when the timer times out

@@ -20,4 +20,8 @@ texture = ExtResource("2_uta4w")
 position = Vector2(0, 1)
 shape = SubResource("RectangleShape2D_wdp8a")
 
+[node name="EnergyCheckTimer" type="Timer" parent="."]
+autostart = true
+
 [connection signal="food_dropped" from="." to="." method="_on_food_dropped"]
+[connection signal="timeout" from="EnergyCheckTimer" to="." method="_on_energy_check_timer_timeout"]

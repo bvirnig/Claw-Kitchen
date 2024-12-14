@@ -34,6 +34,7 @@ position = Vector2(25, 24)
 shape = SubResource("RectangleShape2D_jxe0d")
 
 [node name="CookTimer" type="Timer" parent="."]
+wait_time = 0.1
 one_shot = true
 
 [node name="Food2CookSpawner" parent="." instance=ExtResource("4_tufs5")]

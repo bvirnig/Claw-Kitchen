@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://0ysng1aa0llg"]
+[gd_scene load_steps=13 format=3 uid="uid://0ysng1aa0llg"]
 
 [ext_resource type="Script" path="res://Scenes/main.gd" id="1_oplfw"]
 [ext_resource type="PackedScene" uid="uid://b2juf3rejm26g" path="res://Scenes/kitchen_background.tscn" id="2_253q7"]
@@ -7,24 +7,14 @@
 [ext_resource type="PackedScene" uid="uid://d0t633hy5ht60" path="res://Scenes/claw.tscn" id="5_gkbhi"]
 [ext_resource type="PackedScene" uid="uid://cjuvv2il4of7g" path="res://Scenes/stove_spawner.tscn" id="5_s3b3h"]
 [ext_resource type="PackedScene" uid="uid://7j1v11uuol36" path="res://Scenes/player.tscn" id="6_6ckl8"]
-[ext_resource type="Texture2D" uid="uid://bwhsynoru4f5v" path="res://AssetsBeingUsed/white_cheese_p.png" id="7_taigi"]
-[ext_resource type="Texture2D" uid="uid://br1getktecxsv" path="res://AssetsBeingUsed/potato.png" id="8_7v0xh"]
-[ext_resource type="Texture2D" uid="uid://cv8x4iwvqc8gc" path="res://AssetsBeingUsed/wine_red.png" id="9_ty1yk"]
-[ext_resource type="Texture2D" uid="uid://csyiaa22638se" path="res://AssetsBeingUsed/wine_white2.png" id="10_n7p2c"]
-[ext_resource type="Texture2D" uid="uid://btaxx2xpuc48k" path="res://AssetsBeingUsed/salmon.png" id="12_ytn2m"]
-[ext_resource type="Texture2D" uid="uid://ypl0ymtufgt6" path="res://AssetsBeingUsed/olive_oil.png" id="13_72lj5"]
-[ext_resource type="Texture2D" uid="uid://b476h2vopa8ol" path="res://AssetsBeingUsed/meat2.png" id="14_2nh0u"]
-[ext_resource type="Texture2D" uid="uid://c81c7plc4c6a6" path="res://AssetsBeingUsed/mushroom_white_p.png" id="14_s6r1w"]
-[ext_resource type="Texture2D" uid="uid://cx0d8f21qah17" path="res://AssetsBeingUsed/bell_pepper.png" id="15_dl3tg"]
-[ext_resource type="Texture2D" uid="uid://cusctt8umf7re" path="res://AssetsBeingUsed/butter2.png" id="16_jamvw"]
+[ext_resource type="PackedScene" uid="uid://chqbh7g10acba" path="res://Scenes/raw_gui.tscn" id="9_csid1"]
+[ext_resource type="PackedScene" uid="uid://ccb5rmmic7b0u" path="res://Scenes/cooked_gui.tscn" id="10_b40yg"]
 [ext_resource type="PackedScene" uid="uid://bfi44bn1phq1" path="res://Scenes/request_spawner.tscn" id="18_venf7"]
 
 [sub_resource type="CanvasTexture" id="CanvasTexture_q6qmv"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1jq21"]
 size = Vector2(97, 11)
-
-[sub_resource type="CanvasTexture" id="CanvasTexture_t15ri"]
 
 [node name="Main" type="Node2D"]
 script = ExtResource("1_oplfw")
@@ -65,162 +55,6 @@ offset_bottom = 92.0
 theme_override_font_sizes/font_size = 30
 text = "HELLO"
 
-[node name="InventoryPanel" type="TextureRect" parent="."]
-modulate = Color(0.470588, 0.517647, 0.815686, 1)
-offset_left = 450.0
-offset_top = 601.0
-offset_right = 1156.0
-offset_bottom = 647.0
-texture = SubResource("CanvasTexture_t15ri")
-
-[node name="CheeseLabel" type="Label" parent="."]
-z_index = 1
-offset_left = 501.0
-offset_top = 612.0
-offset_right = 545.0
-offset_bottom = 654.0
-theme_override_font_sizes/font_size = 20
-text = "X 0"
-
-[node name="Sprite2D" type="Sprite2D" parent="CheeseLabel"]
-texture_filter = 1
-position = Vector2(-18, 16)
-texture = ExtResource("7_taigi")
-
-[node name="PotatoLabel" type="Label" parent="."]
-z_index = 1
-offset_left = 566.0
-offset_top = 612.0
-offset_right = 610.0
-offset_bottom = 654.0
-theme_override_font_sizes/font_size = 20
-text = "X 0"
-
-[node name="Sprite2D" type="Sprite2D" parent="PotatoLabel"]
-texture_filter = 1
-position = Vector2(-18, 16)
-texture = ExtResource("8_7v0xh")
-
-[node name="MushroomLabel" type="Label" parent="."]
-z_index = 1
-offset_left = 631.0
-offset_top = 613.0
-offset_right = 675.0
-offset_bottom = 655.0
-theme_override_font_sizes/font_size = 20
-text = "X 0"
-
-[node name="Sprite2D" type="Sprite2D" parent="MushroomLabel"]
-texture_filter = 1
-position = Vector2(-18, 16)
-texture = ExtResource("14_s6r1w")
-
-[node name="BellPepperLabel" type="Label" parent="."]
-z_index = 1
-offset_left = 699.0
-offset_top = 612.0
-offset_right = 743.0
-offset_bottom = 654.0
-theme_override_font_sizes/font_size = 20
-text = "X 0"
-
-[node name="Sprite2D" type="Sprite2D" parent="BellPepperLabel"]
-texture_filter = 1
-position = Vector2(-18, 16)
-texture = ExtResource("15_dl3tg")
-
-[node name="ButterLabel" type="Label" parent="."]
-z_index = 1
-offset_left = 771.0
-offset_top = 612.0
-offset_right = 815.0
-offset_bottom = 654.0
-theme_override_font_sizes/font_size = 20
-text = "X 0"
-
-[node name="Sprite2D" type="Sprite2D" parent="ButterLabel"]
-texture_filter = 1
-position = Vector2(-18, 16)
-texture = ExtResource("16_jamvw")
-
-[node name="OliveOilLabel" type="Label" parent="."]
-z_index = 1
-offset_left = 840.0
-offset_top = 612.0
-offset_right = 884.0
-offset_bottom = 654.0
-theme_override_font_sizes/font_size = 20
-text = "X 0"
-
-[node name="Sprite2D" type="Sprite2D" parent="OliveOilLabel"]
-texture_filter = 1
-position = Vector2(-18, 16)
-texture = ExtResource("13_72lj5")
-
-[node name="BeefLabel" type="Label" parent="."]
-z_index = 1
-offset_left = 895.0
-offset_top = 614.0
-offset_right = 939.0
-offset_bottom = 656.0
-theme_override_font_sizes/font_size = 20
-text = "X 0"
-
-[node name="Sprite2D" type="Sprite2D" parent="BeefLabel"]
-texture_filter = 1
-position = Vector2(-11, 16)
-texture = ExtResource("14_2nh0u")
-
-[node name="FishLabel" type="Label" parent="."]
-z_index = 1
-offset_left = 968.0
-offset_top = 614.0
-offset_right = 1012.0
-offset_bottom = 656.0
-theme_override_font_sizes/font_size = 20
-text = "X 0"
-
-[node name="Sprite2D" type="Sprite2D" parent="FishLabel"]
-texture_filter = 1
-position = Vector2(-18, 16)
-texture = ExtResource("12_ytn2m")
-
-[node name="RedWineLabel" type="Label" parent="."]
-z_index = 1
-offset_left = 1035.0
-offset_top = 614.0
-offset_right = 1079.0
-offset_bottom = 656.0
-theme_override_font_sizes/font_size = 20
-text = "X 0"
-
-[node name="Sprite2D" type="Sprite2D" parent="RedWineLabel"]
-texture_filter = 1
-position = Vector2(-18, 16)
-texture = ExtResource("9_ty1yk")
-
-[node name="WhiteWineLabel" type="Label" parent="."]
-z_index = 1
-offset_left = 1103.0
-offset_top = 614.0
-offset_right = 1147.0
-offset_bottom = 656.0
-theme_override_font_sizes/font_size = 20
-text = "X 0"
-
-[node name="Sprite2D" type="Sprite2D" parent="WhiteWineLabel"]
-texture_filter = 1
-position = Vector2(-18, 16)
-texture = ExtResource("10_n7p2c")
-
-[node name="RequestLabel" type="Label" parent="."]
-z_index = 1
-offset_left = 825.0
-offset_top = 17.0
-offset_right = 888.0
-offset_bottom = 40.0
-text = "Request"
-
 [node name="RequestLabelCheckTimer" type="Timer" parent="."]
 autostart = true
 
@@ -228,6 +62,10 @@ autostart = true
 autostart = true
 
 [node name="RequestSpawner" parent="." instance=ExtResource("18_venf7")]
+
+[node name="RawGUI" parent="." instance=ExtResource("9_csid1")]
+
+[node name="CookedGUI" parent="RawGUI" instance=ExtResource("10_b40yg")]
 
 [connection signal="body_entered" from="CollectionBin" to="." method="_on_collection_bin_body_entered"]
 [connection signal="timeout" from="RequestLabelCheckTimer" to="." method="_on_request_label_check_timer_timeout"]

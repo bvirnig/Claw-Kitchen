@@ -1,0 +1,190 @@
+[gd_scene load_steps=13 format=3 uid="uid://chqbh7g10acba"]
+
+[ext_resource type="Script" path="res://raw_gui.gd" id="1_fa38r"]
+[ext_resource type="Texture2D" uid="uid://bwhsynoru4f5v" path="res://AssetsBeingUsed/white_cheese_p.png" id="2_3h0vj"]
+[ext_resource type="Texture2D" uid="uid://br1getktecxsv" path="res://AssetsBeingUsed/potato.png" id="3_inxvp"]
+[ext_resource type="Texture2D" uid="uid://c81c7plc4c6a6" path="res://AssetsBeingUsed/mushroom_white_p.png" id="4_g854e"]
+[ext_resource type="Texture2D" uid="uid://cx0d8f21qah17" path="res://AssetsBeingUsed/bell_pepper.png" id="5_nuktk"]
+[ext_resource type="Texture2D" uid="uid://cusctt8umf7re" path="res://AssetsBeingUsed/butter2.png" id="6_s40vf"]
+[ext_resource type="Texture2D" uid="uid://ypl0ymtufgt6" path="res://AssetsBeingUsed/olive_oil.png" id="7_5exg7"]
+[ext_resource type="Texture2D" uid="uid://b476h2vopa8ol" path="res://AssetsBeingUsed/meat2.png" id="8_lsu1g"]
+[ext_resource type="Texture2D" uid="uid://btaxx2xpuc48k" path="res://AssetsBeingUsed/salmon.png" id="9_c13di"]
+[ext_resource type="Texture2D" uid="uid://cv8x4iwvqc8gc" path="res://AssetsBeingUsed/wine_red.png" id="10_pkgpq"]
+[ext_resource type="Texture2D" uid="uid://csyiaa22638se" path="res://AssetsBeingUsed/wine_white2.png" id="11_2bv22"]
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_bseie"]
+
+[node name="RawGUI" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("1_fa38r")
+
+[node name="InventoryPanel" type="TextureRect" parent="."]
+modulate = Color(0.470588, 0.517647, 0.815686, 1)
+offset_left = 450.0
+offset_top = 601.0
+offset_right = 1156.0
+offset_bottom = 647.0
+texture = SubResource("CanvasTexture_bseie")
+
+[node name="CheeseLabel" type="Label" parent="."]
+z_index = 1
+texture_filter = 1
+offset_left = 612.0
+offset_top = 631.0
+offset_right = 642.0
+offset_bottom = 673.0
+theme_override_font_sizes/font_size = 10
+text = "0"
+
+[node name="Sprite2D" type="Sprite2D" parent="CheeseLabel"]
+texture_filter = 1
+position = Vector2(-16, -8)
+scale = Vector2(1.5, 1.5)
+texture = ExtResource("2_3h0vj")
+
+[node name="PotatoLabel" type="Label" parent="."]
+z_index = 1
+texture_filter = 1
+offset_left = 666.0
+offset_top = 631.0
+offset_right = 696.0
+offset_bottom = 673.0
+theme_override_font_sizes/font_size = 10
+text = "0"
+
+[node name="Sprite2D" type="Sprite2D" parent="PotatoLabel"]
+texture_filter = 1
+position = Vector2(-16, -8)
+scale = Vector2(1.5, 1.5)
+texture = ExtResource("3_inxvp")
+
+[node name="MushroomLabel" type="Label" parent="."]
+z_index = 1
+texture_filter = 1
+offset_left = 734.0
+offset_top = 631.0
+offset_right = 764.0
+offset_bottom = 673.0
+theme_override_font_sizes/font_size = 10
+text = "0"
+
+[node name="Sprite2D" type="Sprite2D" parent="MushroomLabel"]
+texture_filter = 1
+position = Vector2(-27, -9)
+scale = Vector2(1.5, 1.5)
+texture = ExtResource("4_g854e")
+
+[node name="BellPepperLabel" type="Label" parent="."]
+z_index = 1
+texture_filter = 1
+offset_left = 790.0
+offset_top = 631.0
+offset_right = 820.0
+offset_bottom = 673.0
+theme_override_font_sizes/font_size = 10
+text = "0"
+
+[node name="Sprite2D" type="Sprite2D" parent="BellPepperLabel"]
+texture_filter = 1
+position = Vector2(-16, -8)
+scale = Vector2(1.5, 1.5)
+texture = ExtResource("5_nuktk")
+
+[node name="ButterLabel" type="Label" parent="."]
+z_index = 1
+texture_filter = 1
+offset_left = 857.0
+offset_top = 631.0
+offset_right = 887.0
+offset_bottom = 673.0
+theme_override_font_sizes/font_size = 10
+text = "0"
+
+[node name="Sprite2D" type="Sprite2D" parent="ButterLabel"]
+texture_filter = 1
+position = Vector2(-21, -8)
+scale = Vector2(1.5, 1.5)
+texture = ExtResource("6_s40vf")
+
+[node name="OliveOilLabel" type="Label" parent="."]
+z_index = 1
+texture_filter = 1
+offset_left = 896.0
+offset_top = 630.0
+offset_right = 926.0
+offset_bottom = 672.0
+theme_override_font_sizes/font_size = 10
+text = "0"
+
+[node name="Sprite2D" type="Sprite2D" parent="OliveOilLabel"]
+texture_filter = 1
+position = Vector2(-10, -8)
+scale = Vector2(1.25, 1.25)
+texture = ExtResource("7_5exg7")
+
+[node name="BeefLabel" type="Label" parent="."]
+z_index = 1
+texture_filter = 1
+offset_left = 965.0
+offset_top = 631.0
+offset_right = 995.0
+offset_bottom = 673.0
+theme_override_font_sizes/font_size = 10
+text = "0"
+
+[node name="Sprite2D" type="Sprite2D" parent="BeefLabel"]
+texture_filter = 1
+position = Vector2(-26, -9)
+scale = Vector2(1.5, 1.5)
+texture = ExtResource("8_lsu1g")
+
+[node name="FishLabel" type="Label" parent="."]
+z_index = 1
+texture_filter = 1
+offset_left = 1026.0
+offset_top = 631.0
+offset_right = 1056.0
+offset_bottom = 673.0
+theme_override_font_sizes/font_size = 10
+text = "0"
+
+[node name="Sprite2D" type="Sprite2D" parent="FishLabel"]
+texture_filter = 1
+position = Vector2(-22, -9)
+scale = Vector2(1.5, 1.5)
+texture = ExtResource("9_c13di")
+
+[node name="RedWineLabel" type="Label" parent="."]
+z_index = 1
+texture_filter = 1
+offset_left = 1072.0
+offset_top = 631.0
+offset_right = 1102.0
+offset_bottom = 673.0
+theme_override_font_sizes/font_size = 10
+text = "0"
+
+[node name="Sprite2D" type="Sprite2D" parent="RedWineLabel"]
+texture_filter = 1
+position = Vector2(-7, -8)
+scale = Vector2(1.25, 1.25)
+texture = ExtResource("10_pkgpq")
+
+[node name="WhiteWineLabel" type="Label" parent="."]
+z_index = 1
+texture_filter = 1
+offset_left = 1122.0
+offset_top = 631.0
+offset_right = 1152.0
+offset_bottom = 673.0
+theme_override_font_sizes/font_size = 10
+text = "0"
+
+[node name="Sprite2D" type="Sprite2D" parent="WhiteWineLabel"]
+texture_filter = 1
+position = Vector2(-7, -8)
+scale = Vector2(1.25, 1.25)
+texture = ExtResource("11_2bv22")

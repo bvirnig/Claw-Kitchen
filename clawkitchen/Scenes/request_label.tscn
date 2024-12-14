@@ -22,4 +22,9 @@ texture = SubResource("CanvasTexture_5hqpf")
 [node name="RequestCheckTimer" type="Timer" parent="."]
 autostart = true
 
+[node name="LifeTimer" type="Timer" parent="."]
+wait_time = 40.0
+autostart = true
+
 [connection signal="timeout" from="RequestCheckTimer" to="." method="_on_request_check_timer_timeout"]
+[connection signal="timeout" from="LifeTimer" to="." method="_on_life_timer_timeout"]
