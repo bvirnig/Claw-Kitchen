@@ -20,8 +20,7 @@ func _ready() -> void:
 		
 		# Spawn the first stove at the start of the game
 		_spawn_new_stove()
-	else:
-		print("Error: Stove scene is not assigned.")
+
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
@@ -44,8 +43,6 @@ func _spawn_new_stove() -> void:
 		# Add the new stove to the scene
 		add_child(stove_instance)
 
-		# Debug: Print the global position of the stove after adding it to the scene
-		print("Stove global position: ", stove_instance.global_position)
 
 		# Update the position for the next stove
 		stove_count_in_row += 1

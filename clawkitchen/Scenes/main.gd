@@ -21,10 +21,6 @@ extends Node2D
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	# Ensure GameData is loaded
-	if Gamedata == null:
-		print("Error: GameData singleton not found!")
-		return
 
 	# Initialize the food label with the selected item and its count
 	update_food_label()

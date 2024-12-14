@@ -41,4 +41,4 @@ func free_up_slot(stove_id: int, slot_index: int) -> void:
 		stove_data[stove_id]["occupied_slots"][slot_index] = false
 		# Decrease used capacity when a slot is freed
 		stove_data[stove_id]["used_capacity"] -= 1
-		print("Slot %d freed for stove %d. Used capacity: %d / %d (Max Capacity)", slot_index, stove_id, stove_data[stove_id]["used_capacity"], stove_data[stove_id]["max_capacity"])
+		

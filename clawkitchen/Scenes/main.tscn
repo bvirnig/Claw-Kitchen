@@ -1,9 +1,9 @@
 [gd_scene load_steps=22 format=3 uid="uid://0ysng1aa0llg"]
 
 [ext_resource type="Script" path="res://Scenes/main.gd" id="1_oplfw"]
-[ext_resource type="PackedScene" path="res://Scenes/kitchen_background.tscn" id="2_253q7"]
+[ext_resource type="PackedScene" uid="uid://b2juf3rejm26g" path="res://Scenes/kitchen_background.tscn" id="2_253q7"]
 [ext_resource type="PackedScene" uid="uid://cwoh3durcjkvg" path="res://Scenes/claw_background.tscn" id="2_yh4ff"]
-[ext_resource type="PackedScene" uid="uid://y0ys5si0631" path="res://Scenes/prize_spawner.tscn" id="4_l578h"]
+[ext_resource type="PackedScene" uid="uid://b5vmpjdoyylfc" path="res://Scenes/prize_spawner.tscn" id="4_l578h"]
 [ext_resource type="PackedScene" uid="uid://d0t633hy5ht60" path="res://Scenes/claw.tscn" id="5_gkbhi"]
 [ext_resource type="PackedScene" uid="uid://cjuvv2il4of7g" path="res://Scenes/stove_spawner.tscn" id="5_s3b3h"]
 [ext_resource type="PackedScene" uid="uid://7j1v11uuol36" path="res://Scenes/player.tscn" id="6_6ckl8"]

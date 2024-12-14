@@ -111,6 +111,8 @@ func decrement_food(food_type: String, is_cooked: bool) -> void:
 
 # Method to get the cooking time for a specific food type
 func get_cooking_time(food_type: String) -> float:
+	if food_type == "bomb":
+		return -1  # Special case for bomb (not cookable)
 	return cooking_times.get(food_type, 0.0)  # Default to 0.0 if food type is not found
 
 # Get the selected food texture based on the selected item index
@@ -124,7 +126,7 @@ func get_selected_item() -> String:
 func set_selected_item_by_index(index: int) -> void:
 	if index >= 0 and index < food_types.size():
 		selected_item_index = index
-		print("Selected item set to: " + food_types[selected_item_index])
+		#print("Selected item set to: " + food_types[selected_item_index])
 
 # Function to return food_types array
 func get_food_types() -> Array:

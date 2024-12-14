@@ -1,55 +1,87 @@
 extends Node2D
 
-@export var request_scene: PackedScene  # Assign the Request scene in the inspector
+@export var request_scene: PackedScene  # The scene to be instanced for the request
+@export var spacing: float = 2.0  # Spacing (not really needed for just one request)
+@export var change_food_timer: Timer  # Reference to the timer node
 
+const SCREEN_WIDTH: int = 450  # Fixed screen width
+const SCREEN_HEIGHT: int = 648  # Fixed screen height
+
+# List to keep track of spawned request instances
+var spawned_requests = []
+
+# Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	spawn_request()
+	_spawn_request()  # Spawn the initial request when the node is ready
 
-func spawn_request() -> void:
-	# Ensure the request_scene is valid
-	if request_scene == null:
-		print("Error: No request scene assigned!")
-		return
+# Function to spawn a single request
+func _spawn_request() -> void:
+	var request_height = 50  # Assuming each request label has a height of 50 pixels
 
-	# Create an instance of the request scene
+	# Step 1: Randomly select a food type
+	var selected_food_type = _select_random_food_types()[0]  # Get only the first selected food type
+
+	# Remove all previously spawned requests before spawning a new one
+	_remove_previous_requests()
+
+	# Instantiate the request from the scene
 	var request_instance = request_scene.instantiate()
-	add_child(request_instance)
 
-	# Get the screen size and calculate the adjusted position
-	var viewport_rect = get_viewport().get_visible_rect()
-	var adjusted_position = Vector2(
-		viewport_rect.size.x - 600,  # 550 + 50 = 600 px adjustment to the left
-		55  # 35 + 20 = 55 px adjustment downward
-	)
+	# Calculate the X and Y positions for the request (slightly to the right of top center)
+	var request_x_position = SCREEN_WIDTH / 2 + 320  # Slightly to the right of the center (adjusted to 20)
+	var request_y_position = 50  # Adjusted to 15 pixels down from the very top
 
-	# Adjust position based on the size of the request instance
-	var sprite_size = calculate_request_size(request_instance)
-	request_instance.position = adjusted_position - Vector2(sprite_size.x, 0)  # Offset for sprite size
+	# Get the food texture for the selected food type
+	if selected_food_type in Gamedata.food_types:
+		var food_texture = Gamedata.food_textures[Gamedata.food_types.find(selected_food_type)]
 
-	# Randomly select one of the first 10 food items
-	var food_types = Gamedata.get_food_types()  # Access the singleton directly
-	var food_textures = Gamedata.get_food_textures()  # Access the singleton directly
-	var random_index = randi() % 10  # Use the first 10 food items
-	var selected_food_type = food_types[random_index]
-	var selected_food_texture = food_textures[random_index]
+		# Ensure request_instance has the Sprite2D node
+		var sprite_node = request_instance.get_node("Sprite2D2")
 
-	# Pass the texture to the Request instance
-	if request_instance.has_method("set_food_texture"):
-		request_instance.set_food_texture(selected_food_texture)
+		# Set the texture for the request label
+		sprite_node.texture = food_texture
+
+		# Set the food type for the request label
+		request_instance.food_type = selected_food_type
+
+		# Set the request's position
+		request_instance.position = Vector2(request_x_position, request_y_position)
+
+		# Add the request to the scene
+		add_child(request_instance)
+		request_instance.add_to_group("request")  # Add to the 'request' group for easy management
+
+		# Track the spawned request
+		spawned_requests.append(request_instance)
 	else:
-		print("Error: Request instance does not have a 'set_food_texture' method!")
+		print("ERROR: Food type not found in food_types:", selected_food_type)
 
-	print("Request spawned for: " + selected_food_type)
+# Function to remove all previously spawned requests
+func _remove_previous_requests() -> void:
+	# Iterate through the list of spawned requests
+	for i in range(spawned_requests.size()):
+		# Ensure that the request exists and is still in the scene tree
+		var request = spawned_requests[i]
+		if request != null and request.is_inside_tree():
+			request.queue_free()  # Safely remove it from the scene tree
 
-# Helper function to calculate the size of the request instance based on its sprites
-func calculate_request_size(request_instance: Node) -> Vector2:
-	var size = Vector2(0, 0)
+	# Clear the list after removal
+	spawned_requests.clear()
 
-	# Iterate through the children to find Sprite nodes
-	for child in request_instance.get_children():
-		if child is Sprite2D:
-			var sprite = child as Sprite2D
-			size.x = max(size.x, sprite.texture.get_width())
-			size.y = max(size.y, sprite.texture.get_height())
+# Function to randomly select 5 distinct food types from the Gamedata
+func _select_random_food_types() -> Array:
+	var selected_food_types = []
+	while selected_food_types.size() < 5:
+		var random_index = randi() % Gamedata.food_types.size()  # Ensure random selection within bounds
+		var food_type = Gamedata.food_types[random_index]
+		if food_type not in selected_food_types:
+			selected_food_types.append(food_type)
+	return selected_food_types
 
-	return size
+# Called when the timer times out (if you want to re-spawn requests after some time)
+func _on_change_food_timer_timeout() -> void:
+	# Randomly select new food types for the next set of requests
+	var selected_food_types = _select_random_food_types()
+
+	# Update the food distribution for requests
+	_spawn_request()  # Re-spawn a new request with new food type

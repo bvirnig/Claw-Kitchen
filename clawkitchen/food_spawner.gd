@@ -94,7 +94,6 @@ func _select_random_food_types() -> Array:
 	while selected_food_types.size() < 5:
 		var random_index = randi() % Gamedata.food_types.size()  # Ensure random selection within bounds
 		# Debugging log to check random index
-		print("Random index selected for food type: ", random_index)
 		var food_type = Gamedata.food_types[random_index]
 		if food_type not in selected_food_types:
 			selected_food_types.append(food_type)
