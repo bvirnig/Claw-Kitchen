@@ -23,6 +23,7 @@ script = ExtResource("1_fa38r")
 
 [node name="InventoryPanel" type="TextureRect" parent="."]
 modulate = Color(0.470588, 0.517647, 0.815686, 1)
+layout_mode = 0
 offset_left = 450.0
 offset_top = 601.0
 offset_right = 1156.0
@@ -32,6 +33,7 @@ texture = SubResource("CanvasTexture_bseie")
 [node name="CheeseLabel" type="Label" parent="."]
 z_index = 1
 texture_filter = 1
+layout_mode = 0
 offset_left = 612.0
 offset_top = 631.0
 offset_right = 642.0
@@ -48,6 +50,7 @@ texture = ExtResource("2_3h0vj")
 [node name="PotatoLabel" type="Label" parent="."]
 z_index = 1
 texture_filter = 1
+layout_mode = 0
 offset_left = 666.0
 offset_top = 631.0
 offset_right = 696.0
@@ -64,6 +67,7 @@ texture = ExtResource("3_inxvp")
 [node name="MushroomLabel" type="Label" parent="."]
 z_index = 1
 texture_filter = 1
+layout_mode = 0
 offset_left = 734.0
 offset_top = 631.0
 offset_right = 764.0
@@ -80,6 +84,7 @@ texture = ExtResource("4_g854e")
 [node name="BellPepperLabel" type="Label" parent="."]
 z_index = 1
 texture_filter = 1
+layout_mode = 0
 offset_left = 790.0
 offset_top = 631.0
 offset_right = 820.0
@@ -96,6 +101,7 @@ texture = ExtResource("5_nuktk")
 [node name="ButterLabel" type="Label" parent="."]
 z_index = 1
 texture_filter = 1
+layout_mode = 0
 offset_left = 857.0
 offset_top = 631.0
 offset_right = 887.0
@@ -112,6 +118,7 @@ texture = ExtResource("6_s40vf")
 [node name="OliveOilLabel" type="Label" parent="."]
 z_index = 1
 texture_filter = 1
+layout_mode = 0
 offset_left = 896.0
 offset_top = 630.0
 offset_right = 926.0
@@ -128,6 +135,7 @@ texture = ExtResource("7_5exg7")
 [node name="BeefLabel" type="Label" parent="."]
 z_index = 1
 texture_filter = 1
+layout_mode = 0
 offset_left = 965.0
 offset_top = 631.0
 offset_right = 995.0
@@ -144,6 +152,7 @@ texture = ExtResource("8_lsu1g")
 [node name="FishLabel" type="Label" parent="."]
 z_index = 1
 texture_filter = 1
+layout_mode = 0
 offset_left = 1026.0
 offset_top = 631.0
 offset_right = 1056.0
@@ -160,6 +169,7 @@ texture = ExtResource("9_c13di")
 [node name="RedWineLabel" type="Label" parent="."]
 z_index = 1
 texture_filter = 1
+layout_mode = 0
 offset_left = 1072.0
 offset_top = 631.0
 offset_right = 1102.0
@@ -176,6 +186,7 @@ texture = ExtResource("10_pkgpq")
 [node name="WhiteWineLabel" type="Label" parent="."]
 z_index = 1
 texture_filter = 1
+layout_mode = 0
 offset_left = 1122.0
 offset_top = 631.0
 offset_right = 1152.0
@@ -188,3 +199,19 @@ texture_filter = 1
 position = Vector2(-7, -8)
 scale = Vector2(1.25, 1.25)
 texture = ExtResource("11_2bv22")
+
+[node name="UpdateTimer" type="Timer" parent="."]
+wait_time = 0.5
+autostart = true
+
+[node name="CookedLabel" type="Label" parent="."]
+offset_left = 478.0
+offset_top = 605.0
+offset_right = 569.0
+offset_bottom = 640.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 25
+text = "Raw
+"
+
+[connection signal="timeout" from="UpdateTimer" to="." method="_on_update_timer_timeout"]

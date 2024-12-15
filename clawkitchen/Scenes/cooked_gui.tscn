@@ -1,6 +1,6 @@
 [gd_scene load_steps=13 format=3 uid="uid://ccb5rmmic7b0u"]
 
-[ext_resource type="Script" path="res://raw_gui.gd" id="1_iq6o1"]
+[ext_resource type="Script" path="res://Scenes/cooked_gui.gd" id="1_rutfh"]
 [ext_resource type="Texture2D" uid="uid://bwhsynoru4f5v" path="res://AssetsBeingUsed/white_cheese_p.png" id="2_isirt"]
 [ext_resource type="Texture2D" uid="uid://br1getktecxsv" path="res://AssetsBeingUsed/potato.png" id="3_5sxy8"]
 [ext_resource type="Texture2D" uid="uid://c81c7plc4c6a6" path="res://AssetsBeingUsed/mushroom_white_p.png" id="4_avb3r"]
@@ -19,7 +19,7 @@ layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
-script = ExtResource("1_iq6o1")
+script = ExtResource("1_rutfh")
 
 [node name="InventoryPanel" type="TextureRect" parent="."]
 modulate = Color(0.913951, 0.271816, 0.428168, 1)
@@ -47,7 +47,7 @@ position = Vector2(-16, -8)
 scale = Vector2(1.5, 1.5)
 texture = ExtResource("2_isirt")
 
-[node name="PotatoLabel" type="Label" parent="."]
+[node name="CookedPotatoLabel" type="Label" parent="."]
 z_index = 1
 texture_filter = 1
 layout_mode = 0
@@ -58,7 +58,7 @@ offset_bottom = 627.0
 theme_override_font_sizes/font_size = 10
 text = "0"
 
-[node name="Sprite2D" type="Sprite2D" parent="PotatoLabel"]
+[node name="Sprite2D" type="Sprite2D" parent="CookedPotatoLabel"]
 texture_filter = 1
 position = Vector2(-16, -8)
 scale = Vector2(1.5, 1.5)
@@ -199,3 +199,19 @@ texture_filter = 1
 position = Vector2(-7, -8)
 scale = Vector2(1.25, 1.25)
 texture = ExtResource("11_4bfae")
+
+[node name="UpdateTimer" type="Timer" parent="."]
+wait_time = 0.5
+autostart = true
+
+[node name="CookedLabel" type="Label" parent="."]
+layout_mode = 0
+offset_left = 460.0
+offset_top = 561.0
+offset_right = 551.0
+offset_bottom = 596.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 25
+text = "Cooked"
+
+[connection signal="timeout" from="UpdateTimer" to="." method="_on_update_timer_timeout"]

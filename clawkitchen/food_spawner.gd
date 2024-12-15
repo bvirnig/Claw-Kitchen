@@ -91,7 +91,7 @@ func _remove_previous_prizes() -> void:
 # Function to randomly select 5 distinct food types from the Gamedata
 func _select_random_food_types() -> Array:
 	var selected_food_types = []
-	while selected_food_types.size() < 5:
+	while selected_food_types.size() < 7:
 		var random_index = randi() % Gamedata.food_types.size()  # Ensure random selection within bounds
 		# Debugging log to check random index
 		var food_type = Gamedata.food_types[random_index]

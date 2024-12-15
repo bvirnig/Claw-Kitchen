@@ -47,3 +47,7 @@ func update_food_labels() -> void:
 				if red_wine_label: red_wine_label.text = str(food_count)
 			"white_wine":
 				if white_wine_label: white_wine_label.text = str(food_count)
+
+
+func _on_update_timer_timeout() -> void:
+	update_food_labels()

@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://0ysng1aa0llg"]
+[gd_scene load_steps=15 format=3 uid="uid://0ysng1aa0llg"]
 
 [ext_resource type="Script" path="res://Scenes/main.gd" id="1_oplfw"]
 [ext_resource type="PackedScene" uid="uid://b2juf3rejm26g" path="res://Scenes/kitchen_background.tscn" id="2_253q7"]
@@ -9,6 +9,8 @@
 [ext_resource type="PackedScene" uid="uid://7j1v11uuol36" path="res://Scenes/player.tscn" id="6_6ckl8"]
 [ext_resource type="PackedScene" uid="uid://chqbh7g10acba" path="res://Scenes/raw_gui.tscn" id="9_csid1"]
 [ext_resource type="PackedScene" uid="uid://ccb5rmmic7b0u" path="res://Scenes/cooked_gui.tscn" id="10_b40yg"]
+[ext_resource type="AudioStream" uid="uid://bmxjp41int3vo" path="res://sounds/point-smooth-beep-230573.mp3" id="11_lgj3c"]
+[ext_resource type="PackedScene" uid="uid://duh6wui2yt1iq" path="res://Scenes/cooked_meals_gui.tscn" id="12_xafq2"]
 [ext_resource type="PackedScene" uid="uid://bfi44bn1phq1" path="res://Scenes/request_spawner.tscn" id="18_venf7"]
 
 [sub_resource type="CanvasTexture" id="CanvasTexture_q6qmv"]
@@ -46,15 +48,6 @@ shape = SubResource("RectangleShape2D_1jq21")
 
 [node name="Player" parent="." instance=ExtResource("6_6ckl8")]
 
-[node name="FoodLabel" type="Label" parent="."]
-z_index = 1
-offset_left = 265.0
-offset_top = 50.0
-offset_right = 415.0
-offset_bottom = 92.0
-theme_override_font_sizes/font_size = 30
-text = "HELLO"
-
 [node name="RequestLabelCheckTimer" type="Timer" parent="."]
 autostart = true
 
@@ -66,6 +59,26 @@ autostart = true
 [node name="RawGUI" parent="." instance=ExtResource("9_csid1")]
 
 [node name="CookedGUI" parent="RawGUI" instance=ExtResource("10_b40yg")]
+
+[node name="collectSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("11_lgj3c")
+
+[node name="CookedMealsGUI" parent="." instance=ExtResource("12_xafq2")]
+
+[node name="GameTimer" type="Timer" parent="."]
+wait_time = 300.0
+autostart = true
+
+[node name="GameTimerCountdownLabel" type="Label" parent="."]
+z_index = 2
+offset_left = 82.0
+offset_top = 32.0
+offset_right = 363.0
+offset_bottom = 110.0
+theme_override_font_sizes/font_size = 40
+text = "Time Left : 300"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [connection signal="body_entered" from="CollectionBin" to="." method="_on_collection_bin_body_entered"]
 [connection signal="timeout" from="RequestLabelCheckTimer" to="." method="_on_request_label_check_timer_timeout"]

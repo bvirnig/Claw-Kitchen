@@ -1,18 +1,58 @@
-[gd_scene load_steps=4 format=3 uid="uid://ylm63nph2e3b"]
+[gd_scene load_steps=10 format=3 uid="uid://ylm63nph2e3b"]
 
 [ext_resource type="Script" path="res://request_label.gd" id="1_6jr2x"]
-
-[sub_resource type="CanvasTexture" id="CanvasTexture_0sm8t"]
+[ext_resource type="AudioStream" uid="uid://2lgdbvptkek6" path="res://sounds/gordon-ramsey-what-are-you-an-idiot-sandwich.mp3" id="2_ayttx"]
+[ext_resource type="Texture2D" uid="uid://c647dmrywklsc" path="res://AssetsBeingUsed/requestlabel.png" id="2_ibe5j"]
+[ext_resource type="AudioStream" uid="uid://bleoqxfi0rbqt" path="res://sounds/yes-chef-101soundboards.mp3" id="4_53po7"]
+[ext_resource type="AudioStream" uid="uid://bop1hlavs6xcj" path="res://sounds/roblox-yummy.mp3" id="5_5wnag"]
 
 [sub_resource type="CanvasTexture" id="CanvasTexture_5hqpf"]
+
+[sub_resource type="Animation" id="Animation_7o7va"]
+resource_name = "request"
+length = 100.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.233333, 9.26667, 17.8, 26.9, 35.0333, 43.2, 50.9667, 58.7333, 66.2333, 74.1, 82.1667, 90.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
+}
+
+[sub_resource type="Animation" id="Animation_0tjhv"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_lq60b"]
+_data = {
+"RESET": SubResource("Animation_0tjhv"),
+"request": SubResource("Animation_7o7va")
+}
 
 [node name="Request Label" type="Area2D"]
 script = ExtResource("1_6jr2x")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 modulate = Color(1, 1, 0.447059, 1)
-scale = Vector2(75, 75)
-texture = SubResource("CanvasTexture_0sm8t")
+scale = Vector2(3, 3)
+texture = ExtResource("2_ibe5j")
+hframes = 12
 
 [node name="Sprite2D2" type="Sprite2D" parent="."]
 texture_filter = 1
@@ -23,8 +63,33 @@ texture = SubResource("CanvasTexture_5hqpf")
 autostart = true
 
 [node name="LifeTimer" type="Timer" parent="."]
-wait_time = 40.0
+wait_time = 100.0
 autostart = true
 
+[node name="idiotSandwich" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("2_ayttx")
+volume_db = 10.0
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_lq60b")
+}
+
+[node name="FasterTimer" type="Timer" parent="."]
+wait_time = 10.0
+autostart = true
+
+[node name="yesChef" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("4_53po7")
+volume_db = 10.0
+
+[node name="yumSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("5_5wnag")
+volume_db = 10.0
+
+[connection signal="playSound" from="." to="." method="_on_play_sound"]
 [connection signal="timeout" from="RequestCheckTimer" to="." method="_on_request_check_timer_timeout"]
 [connection signal="timeout" from="LifeTimer" to="." method="_on_life_timer_timeout"]
+[connection signal="finished" from="idiotSandwich" to="." method="_on_idiot_sandwich_finished"]
+[connection signal="timeout" from="FasterTimer" to="." method="_on_faster_timer_timeout"]
+[connection signal="finished" from="yumSound" to="." method="_on_yum_sound_finished"]

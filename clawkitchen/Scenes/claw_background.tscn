@@ -33,6 +33,7 @@ offset_bottom = 674.0
 
 [node name="wallTop" type="ColorRect" parent="."]
 modulate = Color(0.290196, 0.556863, 0.8, 1)
+z_index = 1
 offset_left = 16.0
 offset_top = -19.0
 offset_right = 431.0

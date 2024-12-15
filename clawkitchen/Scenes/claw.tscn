@@ -1,8 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://d0t633hy5ht60"]
 
 [ext_resource type="Script" path="res://Scenes/claw.gd" id="1_sx5ll"]
-
-[sub_resource type="CanvasTexture" id="CanvasTexture_nt2pu"]
+[ext_resource type="Texture2D" uid="uid://pal7x6s1jixq" path="res://AssetsBeingUsed/claw.png" id="2_ft5ed"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_684jp"]
 size = Vector2(50, 50)
@@ -11,16 +10,22 @@ size = Vector2(50, 50)
 collision_mask = 2
 script = ExtResource("1_sx5ll")
 
+[node name="Line2D" type="Line2D" parent="."]
+points = PackedVector2Array(0, 0, 0, 0, 0, 0, 0, 0, -1, -521)
+default_color = Color(0.197937, 0.197937, 0.197937, 1)
+
 [node name="Sprite2D" type="Sprite2D" parent="."]
-modulate = Color(0.466332, 0.199462, 9.62615e-08, 1)
-scale = Vector2(50, 50)
-texture = SubResource("CanvasTexture_nt2pu")
+texture_filter = 1
+scale = Vector2(3, 3)
+texture = ExtResource("2_ft5ed")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 21)
 shape = SubResource("RectangleShape2D_684jp")
 
 [node name="EnergyCheckTimer" type="Timer" parent="."]
 autostart = true
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="body_exited" from="." to="." method="_on_body_exited"]
 [connection signal="timeout" from="EnergyCheckTimer" to="." method="_on_energy_check_timer_timeout"]

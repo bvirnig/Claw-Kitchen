@@ -1,7 +1,9 @@
 extends Node
 
 @export var food_scene: PackedScene  # The scene to be instantiated for food
-signal slot_free
+signal addcookedfood
+
+@onready var orderUpSound: AudioStreamPlayer2D = $orderUpSound # Reference to the AudioStreamPlayer2D node (yumSound)
 
 # Function to instantiate the selected food at a given position
 func instantiate_food_at_position(position: Vector2, selected_food: String) -> void:
@@ -49,7 +51,7 @@ func instantiate_food_at_position(position: Vector2, selected_food: String) -> v
 	food_instance.add_to_group("food")  # Optional: Add to group for easy management
 
 	# Decrement the uncooked food count (because the food is now on the stove)
-	Gamedata.decrement_food(selected_food, false)  # False for uncooked food
+	# Gamedata.decrement_food(selected_food, false)  # False for uncooked food
 
 	# Add a timer for this specific food instance (optional)
 	add_timer_to_food(food_instance, selected_food)
@@ -67,13 +69,20 @@ func add_timer_to_food(food_instance: Node, food_type: String) -> void:
 
 func _on_food_cook_timeout(food_instance: Node, food_type: String) -> void:
 	# Increment the cooked food count in Gamedata when food is cooked
-	Gamedata.cook_food(food_type)  # Increment the cooked food count in GameData
+	Gamedata.cook_food(food_type)  # This method should handle the increment for cooked food counts
+	
+	# Alternatively, if you need to manually increment the cooked_food_counts:
+	# Gamedata.cooked_food_counts[food_type] = Gamedata.cooked_food_counts.get(food_type, 0) + 1
 
 	# Print the food that was cooked
 	print("Food cooked: ", food_instance)
+
+	# Play the yumSound when the food is cooked
+	if orderUpSound:
+		orderUpSound.play()  # Play the sound when food is cooked
 
 	# Queue the food instance for removal from the scene
 	food_instance.queue_free()
 
 	# Emit the signal to notify that a slot is free
-	emit_signal("slot_free")
+	emit_signal("addcookedfood")

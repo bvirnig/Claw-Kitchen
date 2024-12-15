@@ -40,7 +40,12 @@ var food_collected: int = 0
 var selected_item_index: int = 0
 var food_types: Array = [
 	"cheese", "potato", "mushroom", "bell_pepper", "butter", "olive_oil", 
-	"beef", "fish", "red_wine", "white_wine", "stove", "bomb", "energy_boost"  # Added energy_boost to the food types array
+	"beef", "fish", "red_wine", "white_wine", "stove", "bomb", "energy_boost"
+]
+
+var cooked_food_types: Array = [
+	"cooked_potato", "cooked_mushroom", "cooked_bell_pepper", "cooked_butter", "cooked_olive_oil", 
+	"cooked_beef", "cooked_fish", "cooked_red_wine", "cooked_white_wine"
 ]
 
 # Updated cooking times for each food type
@@ -59,6 +64,9 @@ var cooking_times: Dictionary = {
 	"bomb": 0.0,  # Bomb doesn't need cooking time
 	"energy_boost": 1.0  # Set cooking time for energy boost (example: 1 second)
 }
+
+# Counter for completed orders
+var completed_orders_count: int = 0  # Keeps track of the number of completed orders
 
 # Method to increment the food count for a specific type
 func collect_food(food_type: String) -> void:
@@ -86,6 +94,11 @@ func cook_food(food_type: String) -> void:
 	else:
 		cooked_food_counts[food_type] = 1
 	print("Cooked a " + food_type + "! Total cooked: " + str(cooked_food_counts[food_type]))
+
+# Method to increment the completed orders count
+func increment_completed_orders() -> void:
+	completed_orders_count += 1
+	print("Completed Orders: " + str(completed_orders_count))
 
 # Method to get the count of a specific food type
 func get_food_count(food_type: String) -> int:

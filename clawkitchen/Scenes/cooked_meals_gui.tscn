@@ -1,0 +1,41 @@
+[gd_scene load_steps=3 format=3 uid="uid://duh6wui2yt1iq"]
+
+[ext_resource type="Script" path="res://Scenes/cooked_meals_gui.gd" id="1_xmbfl"]
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_p8k1r"]
+
+[node name="CookedMealsGUI" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("1_xmbfl")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+modulate = Color(1, 0.09, 0.09, 1)
+layout_mode = 0
+offset_left = 628.0
+offset_top = 119.0
+offset_right = 963.0
+offset_bottom = 235.0
+texture = SubResource("CanvasTexture_p8k1r")
+
+[node name="MealsCookedLabel" type="Label" parent="."]
+layout_mode = 0
+offset_left = 658.0
+offset_top = 125.0
+offset_right = 932.0
+offset_bottom = 167.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 30
+text = "Orders Completed:"
+
+[node name="MealsCookedAmountLabel" type="Label" parent="."]
+layout_mode = 0
+offset_left = 779.0
+offset_top = 173.0
+offset_right = 824.0
+offset_bottom = 215.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 30
+text = "0"

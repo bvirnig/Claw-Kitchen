@@ -8,12 +8,17 @@ script = ExtResource("1_l1jjx")
 request_scene = ExtResource("2_dw0ok")
 
 [node name="SpawnTimer" type="Timer" parent="."]
-wait_time = 5.0
+wait_time = 12.5
 autostart = true
 
 [node name="ResetTimer" type="Timer" parent="."]
-wait_time = 40.0
+wait_time = 105.0
+autostart = true
+
+[node name="FasterTimer" type="Timer" parent="."]
+wait_time = 150.0
 autostart = true
 
 [connection signal="timeout" from="SpawnTimer" to="." method="_on_spawn_timer_timeout"]
 [connection signal="timeout" from="ResetTimer" to="." method="_on_reset_timer_timeout"]
+[connection signal="timeout" from="FasterTimer" to="." method="_on_faster_timer_timeout"]

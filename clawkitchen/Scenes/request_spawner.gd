@@ -8,7 +8,7 @@ extends Node2D
 
 const SCREEN_WIDTH: int = 450  # Fixed screen width
 const SCREEN_HEIGHT: int = 648  # Fixed screen height
-const SPACING: float = 75.0  # Distance between each request label
+const SPACING: float = 80.0  # Distance between each request label
 
 # Array of 8 fixed positions for the requests
 var spawn_positions: Array = []
@@ -119,3 +119,12 @@ func _select_random_food_types() -> Array:
 		if food_type not in selected_food_types:
 			selected_food_types.append(food_type)
 	return selected_food_types
+
+# Function to be called when the Faster Timer times out
+func _on_faster_timer_timeout() -> void:
+	# Reduce the spawn timer and reset timer by 20 seconds
+	if spawn_timer.wait_time > 10:
+		spawn_timer.wait_time -= 2.5  # Decrease spawn timer by 20 seconds
+
+	if reset_timer.wait_time > 85:
+		reset_timer.wait_time -= 20  # Decrease reset timer by 20 seconds

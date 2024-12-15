@@ -48,8 +48,8 @@ func update_food_speed() -> void:
 func _process(delta: float) -> void:
 	if is_lifted and not is_falling:
 		position.y -= speed * delta  # Lift the food
-		if position.y < 200:  # Limit position so food doesn't go too high
-			position.y = 200
+		if position.y < 175:  # Limit position so food doesn't go too high
+			position.y = 175
 			move_left_right(delta)
 
 	elif is_falling:
@@ -103,3 +103,4 @@ func collect():
 
 func _on_energy_check_timer_timeout() -> void:
 	update_food_speed()  # Update the speed when the timer times out
+	
