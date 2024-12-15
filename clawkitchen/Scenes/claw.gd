@@ -117,7 +117,23 @@ func is_over_collection_area() -> bool:
 
 func _on_body_entered(body: Node2D) -> void:
 	if is_descending and body is Food and not is_holding:
-		pick_up_food(body)
+		# Cast body to Food type to access its properties
+		var food_item = body as Food
+		if food_item:
+			# Check if the food item's type is "bomb"
+			if food_item.food_type == "bomb":
+				# Call the explode() method on the bomb food item
+				body.explode()
+				# Decrement the selected item (if the selected item is not a bomb)
+				var selected_item = Gamedata.get_selected_item()
+				if selected_item != "bomb" and Gamedata.food_counts[selected_item] > 0:
+					Gamedata.decrement_food(selected_item, false)  # False because it's not cooked
+				print("Bomb picked up! Decrementing " + selected_item)
+				ascend_claw(1)
+			else:
+				# If the food type is not a bomb, pick it up as usual
+				pick_up_food(body)
+
 
 func _on_body_exited(body: Node2D) -> void:
 	if is_moving_left_right and body is Food:

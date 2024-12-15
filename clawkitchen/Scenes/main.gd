@@ -7,6 +7,9 @@ extends Node2D
 @onready var game_timer = $GameTimer  # Reference to GameTimer node
 @onready var game_timer_label = $GameTimerCountdownLabel  # Reference to the GameTimerCountdownLabel node
 
+# Path to the GameOverSplash scene
+const GAME_OVER_SCENE_PATH = "res://Scenes/game_over_splash.tscn"
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	# Start the inventory update timer to trigger every 1 second (independent of food_label)
@@ -18,6 +21,7 @@ func _ready() -> void:
 
 	# Start the GameTimer (if necessary)
 	game_timer.start()  # Starts the GameTimer node (ensure it has a wait_time set if you want to count down)
+
 
 	# Update GameTimer label immediately with current countdown
 	update_game_timer_label()
@@ -80,4 +84,10 @@ func _on_collection_bin_body_entered(body: Node2D) -> void:
 		raw_food_gui.update_food_labels()  # This updates all food-related labels
 
 		# Play the collection sound when food is collected
-		collectSound.play()  # Play the sound
+		collectSound.play()  # Play the sound 
+
+# Function that gets called when the game timer ends
+func _on_game_timer_timeout():
+	print("Game Over! Timer has ended.")
+	# Load the GameOverSplash scene
+	get_tree().change_scene_to_file(GAME_OVER_SCENE_PATH)  # Change to the GameOverSplash scene

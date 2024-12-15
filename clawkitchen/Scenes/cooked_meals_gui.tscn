@@ -17,7 +17,7 @@ layout_mode = 0
 offset_left = 628.0
 offset_top = 119.0
 offset_right = 963.0
-offset_bottom = 235.0
+offset_bottom = 217.0
 texture = SubResource("CanvasTexture_p8k1r")
 
 [node name="MealsCookedLabel" type="Label" parent="."]

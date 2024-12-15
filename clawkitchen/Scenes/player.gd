@@ -4,17 +4,20 @@ class_name Player
 @onready var player_sprite: Sprite2D = $Sprite2D  # Reference to the player's Sprite2D node
 
 func _ready() -> void:
-	# Start by setting the player position to the mouse position
+	# Set the player's initial position to the mouse position
 	position = get_global_mouse_position()
 
-	# Set the player's sprite texture to the selected item's texture
+	# Make sure the sprite's anchor point is set correctly (ensure it's centered)
+	player_sprite.centered = true  # This ensures the sprite is centered around its position
+	
+	# Set the player's sprite texture based on the selected item
 	set_player_sprite()
 
 func _process(delta: float) -> void:
-	# Directly set the player's position to the current mouse position
+	# Update the player position based on the mouse position
 	position = get_global_mouse_position()
 
-	# Update the player's sprite based on the selected item in the gamedata singleton
+	# Update the player's sprite texture based on the selected item
 	set_player_sprite()
 
 # Function to update the player's sprite based on the selected food item
@@ -37,14 +40,3 @@ func set_player_sprite() -> void:
 			print("Error: No valid texture found for selected item: " + selected_item)
 	else:
 		print("Error: Invalid selected item.")
-
-# Function to cycle through the first 10 food items
-func cycle_selected_item() -> void:
-	# Get the current index of the selected item
-	var current_index = Gamedata.selected_item_index
-
-	# Increase the index by 1 (or wrap back to 0 if it exceeds the first 10 items)
-	current_index = (current_index + 1) % 10
-
-	# Set the selected item index to the new value
-	Gamedata.set_selected_item_by_index(current_index)

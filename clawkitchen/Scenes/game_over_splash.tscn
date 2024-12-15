@@ -1,0 +1,56 @@
+[gd_scene load_steps=3 format=3 uid="uid://duor5np3aigvx"]
+
+[ext_resource type="Script" path="res://Scenes/game_over_splash.gd" id="1_hjk8u"]
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_xkho2"]
+
+[node name="GameOverSplash" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("1_hjk8u")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+modulate = Color(0, 0, 0, 1)
+layout_mode = 0
+offset_left = -3.0
+offset_top = 2.0
+offset_right = 1175.0
+offset_bottom = 651.0
+texture = SubResource("CanvasTexture_xkho2")
+
+[node name="GameOver" type="Label" parent="."]
+layout_mode = 0
+offset_left = 266.0
+offset_top = 66.0
+offset_right = 836.0
+offset_bottom = 203.0
+theme_override_colors/font_color = Color(1, 0, 0, 1)
+theme_override_font_sizes/font_size = 100
+text = "Game Over!"
+
+[node name="ScoreLabel" type="Label" parent="."]
+layout_mode = 0
+offset_left = 272.0
+offset_top = 228.0
+offset_right = 842.0
+offset_bottom = 365.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 100
+text = "
+"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Click to Restart" type="Label" parent="."]
+layout_mode = 0
+offset_left = 128.0
+offset_top = 368.0
+offset_right = 990.0
+offset_bottom = 645.0
+theme_override_colors/font_color = Color(1, 0, 0, 1)
+theme_override_font_sizes/font_size = 100
+text = "Press 0 
+To Restart"
+horizontal_alignment = 1

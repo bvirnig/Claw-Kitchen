@@ -1,0 +1,35 @@
+[gd_scene load_steps=3 format=3 uid="uid://dgbc41c0q4kn5"]
+
+[ext_resource type="Script" path="res://Scenes/splash_start.gd" id="1_gy2mx"]
+[ext_resource type="Texture2D" uid="uid://3utgik8sdsqo" path="res://AssetsBeingUsed/kitchenpixel.png" id="2_qbrx3"]
+
+[node name="splashStart" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_gy2mx")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 0
+offset_right = 1150.0
+offset_bottom = 647.0
+texture = ExtResource("2_qbrx3")
+
+[node name="ClickLabel" type="Label" parent="."]
+layout_mode = 0
+offset_left = 324.0
+offset_top = 521.0
+offset_right = 805.0
+offset_bottom = 590.0
+theme_override_colors/font_color = Color(1, 0, 0, 1)
+theme_override_font_sizes/font_size = 50
+text = "Click Mouse to Start"
+
+[node name="Title" type="Label" parent="."]
+layout_mode = 0
+offset_left = 71.0
+offset_top = 59.0
+offset_right = 1090.0
+offset_bottom = 251.0
+theme_override_colors/font_color = Color(1, 0, 0, 1)
+theme_override_font_sizes/font_size = 140
+text = "CLAW KITCHEN"

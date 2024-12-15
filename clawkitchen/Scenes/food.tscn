@@ -1,12 +1,18 @@
-[gd_scene load_steps=4 format=3 uid="uid://cm2y2gnjs3smp"]
+[gd_scene load_steps=6 format=3 uid="uid://cm2y2gnjs3smp"]
 
 [ext_resource type="Script" path="res://food.gd" id="1_3r4rc"]
 [ext_resource type="Texture2D" uid="uid://bwhsynoru4f5v" path="res://AssetsBeingUsed/white_cheese_p.png" id="2_uta4w"]
+[ext_resource type="AudioStream" uid="uid://bu0flofgxqlqm" path="res://sounds/medium-explosion-40472-[AudioTrimmer.com].mp3" id="3_2stie"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wdp8a"]
 size = Vector2(31, 50)
 
+[sub_resource type="Gradient" id="Gradient_s0cc4"]
+offsets = PackedFloat32Array(0.0933333, 0.586667, 0.973333)
+colors = PackedColorArray(1, 0.866667, 0, 1, 1, 0.04, 0.04, 1, 0, 0, 0, 1)
+
 [node name="Food" type="CharacterBody2D" groups=["food"]]
+z_index = 1
 collision_layer = 2
 collision_mask = 3
 script = ExtResource("1_3r4rc")
@@ -23,5 +29,37 @@ shape = SubResource("RectangleShape2D_wdp8a")
 [node name="EnergyCheckTimer" type="Timer" parent="."]
 autostart = true
 
+[node name="explosion" type="CPUParticles2D" parent="."]
+z_index = 2
+emitting = false
+amount = 100
+lifetime = 0.5
+one_shot = true
+speed_scale = 2.94
+explosiveness = 1.0
+randomness = 1.0
+emission_shape = 1
+emission_sphere_radius = 60.0
+spread = 180.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 262.62
+initial_velocity_max = 292.92
+angular_velocity_min = 14.55
+angular_velocity_max = 247.27
+angle_max = 720.0
+scale_amount_min = 3.0
+scale_amount_max = 20.0
+color_ramp = SubResource("Gradient_s0cc4")
+
+[node name="explosionSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_2stie")
+volume_db = 10.0
+
+[node name="ExplodeTimer" type="Timer" parent="."]
+wait_time = 0.001
+one_shot = true
+
 [connection signal="food_dropped" from="." to="." method="_on_food_dropped"]
 [connection signal="timeout" from="EnergyCheckTimer" to="." method="_on_energy_check_timer_timeout"]
+[connection signal="finished" from="explosionSound" to="." method="_on_explosion_sound_finished"]
+[connection signal="timeout" from="ExplodeTimer" to="." method="_on_explode_timer_timeout"]

@@ -4,7 +4,7 @@ extends Node2D
 @export var change_food_timer: Timer  # Reference to the timer node
 @onready var spawn_timer: Timer = $SpawnTimer  # Reference to your SpawnTimer in the scene tree
 @onready var reset_timer: Timer = $ResetTimer  # Reference to your ResetTimer in the scene tree
-@export var initial_position: Vector2 = Vector2(520, 50)  # Initial spawn position
+@export var initial_position: Vector2 = Vector2(520, 150)  # Initial spawn position
 
 const SCREEN_WIDTH: int = 450  # Fixed screen width
 const SCREEN_HEIGHT: int = 648  # Fixed screen height
@@ -124,7 +124,7 @@ func _select_random_food_types() -> Array:
 func _on_faster_timer_timeout() -> void:
 	# Reduce the spawn timer and reset timer by 20 seconds
 	if spawn_timer.wait_time > 10:
-		spawn_timer.wait_time -= 2.5  # Decrease spawn timer by 20 seconds
+		spawn_timer.wait_time -= 1.5  # Decrease spawn timer by 20 seconds
 
 	if reset_timer.wait_time > 85:
-		reset_timer.wait_time -= 20  # Decrease reset timer by 20 seconds
+		reset_timer.wait_time -= 10  # Decrease reset timer by 10 seconds

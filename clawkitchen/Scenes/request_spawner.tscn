@@ -12,7 +12,7 @@ wait_time = 12.5
 autostart = true
 
 [node name="ResetTimer" type="Timer" parent="."]
-wait_time = 105.0
+wait_time = 110.0
 autostart = true
 
 [node name="FasterTimer" type="Timer" parent="."]

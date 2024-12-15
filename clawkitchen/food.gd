@@ -20,7 +20,13 @@ var speed: float = BASE_SPEED
 const LEFT_BOUNDARY: float = 40.0
 const RIGHT_BOUNDARY: float = 410.0  # Adjust based on your game's design
 
+# Signal to notify when the food is dropped
 signal food_dropped
+
+# Explosion effect and sound as variables
+var explosion_effect: CPUParticles2D  # Particle system for explosion
+var explosion_sound: AudioStreamPlayer2D  # Sound for explosion
+var explode_timer: Timer  # Reference to the timer node for triggering explosion
 
 # Initialization
 func _ready() -> void:
@@ -30,7 +36,11 @@ func _ready() -> void:
 		var sprite = $Sprite2D
 		if sprite:
 			sprite.texture = prize_textures[texture_index]  # Directly assign the texture from the array
-	
+
+	# Initialize explosion effect and sound nodes
+	explosion_effect = $explosion  # Assuming CPUParticles2D node is named "explosion"
+	explosion_sound = $explosionSound  # Assuming AudioStreamPlayer2D node is named "explosionSound"
+	explode_timer = $ExplodeTimer  # Assuming the timer is named "ExplodeTimer"
 
 
 # Update food's speed based on the energy_boost count
@@ -100,7 +110,31 @@ func collect():
 	emit_signal("food_dropped")  # Emit a signal to notify that the food has been collected
 	queue_free()  # Remove the food node from the scene
 
-
 func _on_energy_check_timer_timeout() -> void:
 	update_food_speed()  # Update the speed when the timer times out
 	
+# Function to handle explosion sound and starting the timer for explosion effect
+func explode():
+	explosion_effect.emitting = true
+	# Play the explosion sound
+	if explosion_sound:
+		explosion_sound.play()  # Play the explosion sound
+		# Connect the finished signal to trigger the removal of the food
+	else:
+		print("Explosion sound not found!")
+
+	# Start the explosion timer to trigger the effect
+	if explode_timer:
+		explode_timer.start()  # Start the timer to trigger the explosion effect after the timeout
+	else:
+		print("ExplodeTimer not found!")
+
+# Function to trigger the explosion effect when timer times out
+func _on_explode_timer_timeout():
+	explosion_effect.emitting = true
+		
+
+# Function to wait for the explosion sound to finish before removing the food
+func _on_explosion_sound_finished() -> void:
+	print("Explosion sound finished, now removing food.")
+	queue_free()  # Remove the food object after the sound finishes
