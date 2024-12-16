@@ -84,7 +84,6 @@ func cook_food(food_type: String) -> void:
 		print("Cannot cook a bomb!")
 		return
 	
-	# No cooking for energy_boost (if it's instant), otherwise add your logic here
 	if food_type == "energy_boost":
 		print("Energy Boost is ready! Instant item!")
 		return
@@ -95,20 +94,16 @@ func cook_food(food_type: String) -> void:
 		cooked_food_counts[food_type] = 1
 	print("Cooked a " + food_type + "! Total cooked: " + str(cooked_food_counts[food_type]))
 
-# Method to increment the completed orders count
 func increment_completed_orders() -> void:
 	completed_orders_count += 1
 	print("Completed Orders: " + str(completed_orders_count))
 
-# Method to get the count of a specific food type
 func get_food_count(food_type: String) -> int:
 	return food_counts.get(food_type, 0)
 
-# Method to get the count of a specific cooked food type
 func get_cooked_food_count(food_type: String) -> int:
 	return cooked_food_counts.get(food_type, 0)
 
-# Generalized method to decrement the food count for either raw or cooked food
 func decrement_food(food_type: String, is_cooked: bool) -> void:
 	# No decrementing of bomb or energy_boost if cooked, as they're not cooked
 	if food_type == "bomb" or food_type == "energy_boost":
@@ -122,29 +117,27 @@ func decrement_food(food_type: String, is_cooked: bool) -> void:
 	else:
 		print("Error: No " + food_type + " left to decrement!")
 
-# Method to get the cooking time for a specific food type
 func get_cooking_time(food_type: String) -> float:
 	if food_type == "bomb":
-		return -1  # Special case for bomb (not cookable)
-	return cooking_times.get(food_type, 0.0)  # Default to 0.0 if food type is not found
+		return -1 
+	return cooking_times.get(food_type, 0.0) 
 
-# Get the selected food texture based on the selected item index
 func get_selected_item() -> String:
 	if selected_item_index >= 0 and selected_item_index < food_types.size():
 		return food_types[selected_item_index]
 	else:
-		return ""  # Return an empty string if index is out of bounds
+		return "" 
 
 # Set the selected food item by its index
 func set_selected_item_by_index(index: int) -> void:
 	if index >= 0 and index < food_types.size():
 		selected_item_index = index
-		#print("Selected item set to: " + food_types[selected_item_index])
+	
 
-# Function to return food_types array
+
 func get_food_types() -> Array:
 	return food_types
 
-# Function to return food_textures array
+
 func get_food_textures() -> Array:
 	return food_textures

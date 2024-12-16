@@ -9,23 +9,23 @@ extends Control
 @onready var cooked_fish_label = $FishLabel
 @onready var cooked_red_wine_label = $RedWineLabel
 @onready var cooked_white_wine_label = $WhiteWineLabel
-@onready var update_timer = $UpdateTimer  # Assuming you have a Timer node
+@onready var update_timer = $UpdateTimer
 
-# Called when the node enters the scene tree for the first time.
+
 func _ready() -> void:
 	# Update food labels immediately when the scene is ready
 	update_food_labels()
 	# Start the timer
 	update_timer.start()
 
-# Update the cooked food labels for all cooked food types dynamically
+# Update the cooked food labels for all cooked food types 
 func update_food_labels() -> void:
 	var cooked_food_types = Gamedata.cooked_food_counts  # Assuming you have the cooked food counts in Gamedata
 	for cooked_food_type in cooked_food_types:
 		# Get the current count of the cooked food type from Gamedata
 		var food_count = Gamedata.get_cooked_food_count(cooked_food_type)
 
-		# Update the labels for each cooked food type dynamically
+		# Update the labels for each cooked food type 
 		match cooked_food_type:
 			"potato":
 				if cooked_potato_label: cooked_potato_label.text = str(food_count)
@@ -47,5 +47,4 @@ func update_food_labels() -> void:
 				if cooked_white_wine_label: cooked_white_wine_label.text = str(food_count)
 
 func _on_update_timer_timeout() -> void:
-	# This will be called when the timer times out
 	update_food_labels()

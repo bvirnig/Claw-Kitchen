@@ -100,6 +100,6 @@ z_index = 3
 [connection signal="body_entered" from="CollectionBin" to="." method="_on_collection_bin_body_entered"]
 [connection signal="timeout" from="RequestLabelCheckTimer" to="." method="_on_request_label_check_timer_timeout"]
 [connection signal="timeout" from="RequestLabelCheckTimer" to="." method="_on_request_timer_timeout"]
-[connection signal="timeout" from="InventoryUpdateTimer" to="." method="_on_food_label_timer_timeout"]
 [connection signal="timeout" from="InventoryUpdateTimer" to="." method="_on_inventory_update_timer_timeout"]
+[connection signal="timeout" from="InventoryUpdateTimer" to="." method="_on_food_label_timer_timeout"]
 [connection signal="timeout" from="GameTimer" to="." method="_on_game_timer_timeout"]
